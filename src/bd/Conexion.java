@@ -13,7 +13,7 @@ public class Conexion {
         try {
 
             String driverClassName = "com.mysql.jdbc.Driver";
-            String driverUrl = "jdbc:mysql://localhost/examen";
+            String driverUrl = "jdbc:mysql://localhost/consultaMedica";
             Class.forName(driverClassName);
             System.out.println("Proceso de conexión...");
             connection = DriverManager.getConnection(driverUrl, "root", "MySQL");

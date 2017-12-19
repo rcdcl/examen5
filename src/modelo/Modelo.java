@@ -23,12 +23,12 @@ public class Modelo extends Conexion {
 //
 
     //Agregar datos a la BD//
-    public boolean agregarEmpleado(int codigo, String rut, String nombre, String apellido, int celular, String email, int sueldo_bruto, String est_civil, String nom_depto) {
+    public boolean agregarPaciente(String rut, String nombre, String genero, int edad, String direccion, String ciudad, String isapre, int donante) {
         // Se arma la consulta para verificar si el código a ingresar ya existe
 
         //Se envía el dato
-        String query = "INSERT INTO empleados (codigo, rut, nombre, apellido, celular, email, sueldo_bruto, est_civil, nom_depto)"
-                + "values ('" + codigo + "', '" + rut + "', '" + nombre + "', '" + apellido + "', '" + celular + "', '" + email + "', '" + sueldo_bruto + "', '" + est_civil + "', '" + nom_depto + "');";
+        String query = "INSERT INTO paciente (rut, nombre, genero, edad, direccion, ciudad, isapre, donante)"
+                + "values ('" + rut + "', '" + nombre + "', '" + genero + "', '" + edad + "', '" + direccion + "', '" + ciudad + "', '" + isapre + "', '" + donante + "');";
 
         //se ejecuta la consulta
         try {
@@ -47,32 +47,32 @@ public class Modelo extends Conexion {
     }
 
     //Buscar datos dentro de la BD
-    public Object buscarDato(int codigo) {
+    public Object buscarDato(int rut) {
         DefaultTableModel tablemodel = new DefaultTableModel();
         //int registros = 0;
-        String[] columNames = {"Codigo", "rut", "Nombre", "Apellido", "Celular", "Email", "Sueldo Bruto", "Estado Civil", "Nombre Departamento"};
+        String[] columNames = {"Rut", "Nombre", "Género", "Edad", "Direccion", "Ciudad", "Isapre", "Donante"};
 
-        Object[][] data = new String[1][9];
+        Object[][] data = new String[1][8];
         try {
-            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT codigo, rut, nombre, apellido, celular, email, sueldo_bruto, est_civil, nom_depto FROM empleados where codigo ='" + codigo + "'");
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT rut, nombre, genero, edad, direccion, ciudad, isapre, donante FROM paciente where rut like '%" + rut +"%'");
             ResultSet res = pstm.executeQuery();
-            System.out.println(codigo);
-            String scodigo = String.valueOf(codigo);
+            System.out.println(rut);
+            String scodigo = String.valueOf(rut);
 
             System.out.println(scodigo);
 
             int i = 0;
             while (res.next()) {
 
-                data[i][0] = res.getString("codigo");
-                data[i][1] = res.getString("rut");
-                data[i][2] = res.getString("nombre");
-                data[i][3] = res.getString("apellido");
-                data[i][4] = res.getString("celular");
-                data[i][5] = res.getString("email");
-                data[i][6] = res.getString("sueldo_bruto");
-                data[i][7] = res.getString("est_civil");
-                data[i][8] = res.getString("nom_depto");
+                data[i][0] = res.getString("rut");
+                data[i][1] = res.getString("nombre");
+                data[i][2] = res.getString("genero");
+                data[i][3] = res.getString("edad");
+                data[i][4] = res.getString("direccion");
+                data[i][5] = res.getString("ciudad");
+                data[i][6] = res.getString("isapre");
+                data[i][7] = res.getString("donante");
+
 
                 i++;
             }
@@ -91,6 +91,66 @@ public class Modelo extends Conexion {
         return tablemodel;
 
     }
+    
+    
+        
+    //Metodo Buscar RUT  de la BD
+    public DefaultTableModel buscarRut(String rut) throws SQLException  {
+        DefaultTableModel tablemodel = new DefaultTableModel();
+        int registros = 0;
+        String[] columNames = {"Rut", "Nombre", "Género", "Edad", "Direccion", "Ciudad", "Isapre", "Donante"};
+                
+        try {
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(*) as total from paciente");
+            ResultSet res = pstm.executeQuery();
+            res.next();
+            registros = res.getInt("total");
+            res.close();
+           //   if (registros == 0){
+           //   JOptionPane.showMessageDialog(null, "El Nombre no existe en la BD");
+           // }
+        } catch (SQLException e) {
+            System.err.println(e.getMessage());
+        }
+        Object[][] data = new String[registros][8];
+
+        try {
+            PreparedStatement pstm = this.getConexion().prepareStatement
+            ("SELECT rut, nombre, genero, edad, direccion, ciudad, isapre, donante FROM paciente where rut like '%" + rut +"%'");
+            ResultSet res = pstm.executeQuery();
+            System.out.println(rut);
+            String snombre = String.valueOf(rut);
+
+            System.out.println(snombre);
+            
+            int i = 0;
+            
+            while (res.next()) {
+
+                data[i][0] = res.getString("rut");
+                data[i][1] = res.getString("nombre");
+                data[i][2] = res.getString("genero");
+                data[i][3] = res.getString("edad");
+                data[i][4] = res.getString("direccion");
+                data[i][5] = res.getString("ciudad");
+                data[i][6] = res.getString("isapre");
+                data[i][7] = res.getString("donante");
+ 
+
+                i++;
+            
+
+            //res.close();
+            tablemodel.setDataVector(data, columNames);
+            getConexion().close();
+            
+        }
+        }catch (SQLException ex) {
+            System.err.println(ex.getMessage());
+        }
+        return tablemodel;
+    }
+
 
     //Eliminar Dato de la BD 
     public boolean eliminarDato(int codigo) {
@@ -123,9 +183,9 @@ public class Modelo extends Conexion {
     public DefaultTableModel mostrarDato() {
         DefaultTableModel tablemodel = new DefaultTableModel();
         int registros = 0;
-        String[] columNames = {"Codigo", "rut", "Nombre", "Apellido", "Celular", "Email", "Sueldo Bruto", "Estado Civil", "Nombre Departamento"};
+        String[] columNames = {"Rut", "Nombre", "Género", "Edad", "Direccion", "Ciudad", "Isapre", "Donante"};
         try {
-            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(*) as total from empleados");
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(*) as total from paciente");
             ResultSet res = pstm.executeQuery();
             res.next();
             registros = res.getInt("total");
@@ -133,22 +193,22 @@ public class Modelo extends Conexion {
         } catch (SQLException e) {
             System.err.println(e.getMessage());
         }
-        Object[][] data = new String[registros][9];
+        Object[][] data = new String[registros][8];
         try {
-            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT codigo, rut, nombre, apellido, celular, email, sueldo_bruto, est_civil, nom_depto FROM empleados");
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT rut, nombre, genero, edad, direccion, ciudad, isapre, donante FROM paciente");
             ResultSet res = pstm.executeQuery();
             int i = 0;
             while (res.next()) {
 
-                data[i][0] = res.getString("codigo");
-                data[i][1] = res.getString("rut");
-                data[i][2] = res.getString("nombre");
-                data[i][3] = res.getString("apellido");
-                data[i][4] = res.getString("celular");
-                data[i][5] = res.getString("email");
-                data[i][6] = res.getString("sueldo_bruto");
-                data[i][7] = res.getString("est_civil");
-                data[i][8] = res.getString("nom_depto");
+                data[i][0] = res.getString("rut");
+                data[i][1] = res.getString("nombre");
+                data[i][2] = res.getString("genero");
+                data[i][3] = res.getString("edad");
+                data[i][4] = res.getString("direccion");
+                data[i][5] = res.getString("ciudad");
+                data[i][6] = res.getString("isapre");
+                data[i][7] = res.getString("donante");
+   
 
                 i++;
             }
@@ -162,48 +222,7 @@ public class Modelo extends Conexion {
 
     }
     
-    //Mostrar Empleados Departamento de Redes
-        public DefaultTableModel mostrarDatoRedes() {
-        DefaultTableModel tablemodel = new DefaultTableModel();
-        int registros = 0;
-        String[] columNames = {"Codigo", "rut", "Nombre", "Apellido", "Celular", "Email", "Sueldo Bruto", "Estado Civil", "Nombre Departamento"};
-        try {
-            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(*) as total from empleados");
-            ResultSet res = pstm.executeQuery();
-            res.next();
-            registros = res.getInt("total");
-            res.close();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        Object[][] data = new String[registros][9];
-        try {
-            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT codigo, rut, nombre, apellido, celular, email, sueldo_bruto, est_civil, nom_depto FROM empleados where nom_depto = 'Redes'");
-            ResultSet res = pstm.executeQuery();
-            int i = 0;
-            while (res.next()) {
-
-                data[i][0] = res.getString("codigo");
-                data[i][1] = res.getString("rut");
-                data[i][2] = res.getString("nombre");
-                data[i][3] = res.getString("apellido");
-                data[i][4] = res.getString("celular");
-                data[i][5] = res.getString("email");
-                data[i][6] = res.getString("sueldo_bruto");
-                data[i][7] = res.getString("est_civil");
-                data[i][8] = res.getString("nom_depto");
-
-                i++;
-            }
-            res.close();
-            tablemodel.setDataVector(data, columNames);
-            getConexion().close();
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-        }
-        return tablemodel;
-
-    }
+   
 
     //Modificar los datos de la BD
     public boolean modificarDato(int codigo, String rut, String nombre, String apellido, int celular, String email, int sueldo_bruto, String est_civil, String nom_depto){
@@ -246,41 +265,13 @@ try {
         
     }
         
-    public boolean borrarSueldo120() {
-
-        
-        try{
-            PreparedStatement pstm = this.getConexion().prepareStatement("DELETE from empleados where sueldo_bruto = 120000;");
-            int r = pstm.executeUpdate();
-            pstm.close();
-
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return false;
-        }
-
-        return true;
-
-    }
-    
-       public boolean aumentaSueldo() {
-
-        
-        try{
-            PreparedStatement pstm = this.getConexion().prepareStatement("UPDATE empleados SET sueldo_bruto = sueldo_bruto*1.10;");
-            int r = pstm.executeUpdate();
-            pstm.close();
-
-        } catch (SQLException e) {
-            System.err.println(e.getMessage());
-            return false;
-        }
-
-        return true;
-
-    }
+ 
     
     
 
     //Modificar los datos de la BD
+
+    public boolean agregarPaciente(int parseInt, String text, String text0, String text1, int parseInt0, String text2, int parseInt1, String ecivil, String valueOf) {
+        return false;
+    }
 }

@@ -376,7 +376,7 @@ public class Registro implements ActionListener, MouseListener {
 
                             
                                                                                     // int codigo, String rut, String nombre, String apellido, int celular, String email, int sueldo_bruto, String est_civil, String nom_depto
-                            if (this.modeloDato.agregarEmpleado(Integer.parseInt(this.vistaEmpleado.txtcodigo.getText()), this.vistaEmpleado.txtrut.getText() ,this.vistaEmpleado.txtnombre.getText(), this.vistaEmpleado.txtapellido.getText(), Integer.parseInt(this.vistaEmpleado.txtcelular.getText()), this.vistaEmpleado.txtemail.getText(), Integer.parseInt(this.vistaEmpleado.txtsueldo.getText()), ecivil, String.valueOf(this.vistaEmpleado.cbodepartamento.getSelectedItem()))) {
+                            if (this.modeloDato.agregarPaciente(Integer.parseInt(this.vistaEmpleado.txtcodigo.getText()), this.vistaEmpleado.txtrut.getText() ,this.vistaEmpleado.txtnombre.getText(), this.vistaEmpleado.txtapellido.getText(), Integer.parseInt(this.vistaEmpleado.txtcelular.getText()), this.vistaEmpleado.txtemail.getText(), Integer.parseInt(this.vistaEmpleado.txtsueldo.getText()), ecivil, String.valueOf(this.vistaEmpleado.cbodepartamento.getSelectedItem()))) {
 
                                 JOptionPane.showMessageDialog(null, "El Empleado se agregó correctamente");
 
@@ -442,10 +442,7 @@ public class Registro implements ActionListener, MouseListener {
                 this.vistaMostrar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
                 break;
                 
-            case btnmostrarredes:
 
-                this.vistaMostrar.tbEmpleado.setModel(this.modeloDato.mostrarDatoRedes());
-                break;
 
             case btnsalir:
                 limpiartodo();
@@ -496,30 +493,9 @@ public class Registro implements ActionListener, MouseListener {
                 
 
                 
-            case btnelims120:
+
                 
-                boolean borrar= this.modeloDato.borrarSueldo120();
-                if (borrar == true){
-                    JOptionPane.showMessageDialog(null, "Se borraron los campos solicitados");
-                    
-                } else {
-                    JOptionPane.showMessageDialog(null, "No existen empleados con sueldos de 120.000");
-                }
-                
-                break;
-                
-            case btnaumentar:
-                boolean aumentar= this.modeloDato.aumentaSueldo();
-                
-                if (aumentar == true){
-                    JOptionPane.showMessageDialog(null, "Se aumentaron todos los sueldos en 10%");
-                    
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo aumentar los sueldos");
-                }
-                limpiartodo();
-                this.vistaMostrar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
-                break;
+
                 
 
         }
