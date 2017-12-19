@@ -156,10 +156,10 @@ public class Listar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    public javax.swing.JButton btnaumentar;
-    public javax.swing.JButton btnelims120;
+    private javax.swing.JButton btnaumentar;
+    private javax.swing.JButton btnelims120;
     public javax.swing.JButton btnmostrar;
-    public javax.swing.JButton btnmostrarredes;
+    private javax.swing.JButton btnmostrarredes;
     public javax.swing.JButton btnvolver;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable tbEmpleado;

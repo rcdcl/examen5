@@ -7,6 +7,9 @@ package controlador;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -26,7 +29,7 @@ import vista.Listar;
  *
  * @author MBpro_Rafa//
  */
-public class Registro implements ActionListener {
+public class Registro implements ActionListener, MouseListener {
 
     //Declarar vista
     Agregar vistaEmpleado;
@@ -38,6 +41,8 @@ public class Registro implements ActionListener {
     
     
     String ecivil;
+
+
 
     //Metodo enumerar donde se agregan los botones o elementos que van a desencadenar acciones (que voy a escuchar)
     public enum Accion {
@@ -68,9 +73,11 @@ public class Registro implements ActionListener {
     //Agregamos el constructor de la clase
     public Registro(Agregar vistaEmpleado) {
         this.vistaEmpleado = vistaEmpleado;
+        
         //this.vistaElDato.setVisible(true);
 
     }
+
 
     //Creamos metodo para iniciar
     public void iniciar() {
@@ -106,20 +113,13 @@ public class Registro implements ActionListener {
         this.vistaMostrar.btnmostrar.setActionCommand("btnmostrar");
         this.vistaMostrar.btnmostrar.addActionListener(this);
         // Escuchamos el boton que muestra el dato
-        this.vistaMostrar.btnmostrarredes.setActionCommand("btnmostrarredes");
-        this.vistaMostrar.btnmostrarredes.addActionListener(this);
+
         // Escuchamos el boton volver de vista Listar
         this.vistaMostrar.btnvolver.setActionCommand("btnvolver");
         this.vistaMostrar.btnvolver.addActionListener(this);
        
 
-        // Escuchamos el boton elimiar sueldos 120000 de vista Listar
-        this.vistaMostrar.btnelims120.setActionCommand("btnelims120");
-        this.vistaMostrar.btnelims120.addActionListener(this);
-
-        // Escuchamos el boton umenta sueldos en 10% de vista Listar
-        this.vistaMostrar.btnaumentar.setActionCommand("btnaumentar");
-        this.vistaMostrar.btnaumentar.addActionListener(this);        
+      
         
         
         
@@ -146,6 +146,8 @@ public class Registro implements ActionListener {
         // Escuchamos opción mostar barra menú
         this.vistaEmpleado.mempmostrar.setActionCommand("mempmostrar");
         this.vistaEmpleado.mempmostrar.addActionListener(this);
+        
+        this.vistaMostrar.tbEmpleado.addMouseListener(this);
         
 
     }
@@ -527,6 +529,74 @@ public class Registro implements ActionListener {
         // TODO code application logic here
         new Registro(new vista.Agregar()).iniciar();
     }
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        int row = this.vistaMostrar.tbEmpleado.rowAtPoint(e.getPoint());
 
+        /* row devolvera -1 si se ha clicado fuera de la fila pero dentro de la tabla, si no devolvera el indice de la fila en la que se ha clicado. */
+        this.vistaEmpleado.txtcodigo.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 0)));
+        this.vistaEmpleado.txtrut.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 1)));
+        this.vistaEmpleado.txtnombre.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 2)));
+        this.vistaEmpleado.txtapellido.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 3)));
+        this.vistaEmpleado.txtcelular.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 4)));
+        this.vistaEmpleado.txtemail.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 5)));
+        this.vistaEmpleado.txtsueldo.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 6)));
+
+        String ecivil = String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 7));
+        switch (ecivil) {
+            case "C":
+                this.vistaEmpleado.cboestadocivil.setSelectedIndex(1);
+                break;
+            case "S":
+                this.vistaEmpleado.cboestadocivil.setSelectedIndex(2);
+                break;
+            case "V":
+                this.vistaEmpleado.cboestadocivil.setSelectedIndex(3);
+                break;
+        }
+        
+                        
+                        
+                        String departamento = String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 8));
+                        switch (departamento){
+                            case "Administración":
+                            this.vistaEmpleado.cbodepartamento.setSelectedIndex(1);
+                            break;    
+                            case "Bienestar":
+                            this.vistaEmpleado.cbodepartamento.setSelectedIndex(2);
+                                break;
+                            case "Finanzas":
+                            this.vistaEmpleado.cbodepartamento.setSelectedIndex(3);    
+                        break;
+                        
+                            case "Informática":
+                               this.vistaEmpleado.cbodepartamento.setSelectedIndex(4);   
+                                break;
+                                
+                            case "Redes":
+                                this.vistaEmpleado.cbodepartamento.setSelectedIndex(5);  
+                                break;
+                    }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+
+    }
 
 }

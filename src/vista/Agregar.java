@@ -37,7 +37,6 @@ public class Agregar extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
         btnagregar = new javax.swing.JButton();
-        btneliminar = new javax.swing.JButton();
         btnmodificar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         btnsalir = new javax.swing.JButton();
@@ -52,6 +51,7 @@ public class Agregar extends javax.swing.JFrame {
         jLabel8 = new javax.swing.JLabel();
         txtsueldo = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
+        btneliminar = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         msissalir = new javax.swing.JMenuItem();
@@ -87,9 +87,6 @@ public class Agregar extends javax.swing.JFrame {
         btnagregar.setText(" Agregar Empleado");
         btnagregar.setToolTipText("");
         jPanel1.add(btnagregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 300, 210, 70));
-
-        btneliminar.setText("Eliminar Empleado");
-        jPanel1.add(btneliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(280, 380, 210, 70));
 
         btnmodificar.setText("Modificar Datos Empleado");
         jPanel1.add(btnmodificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(500, 380, 220, 70));
@@ -132,6 +129,9 @@ public class Agregar extends javax.swing.JFrame {
 
         jLabel10.setText("Sueldo Bruto");
         jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 170, -1, -1));
+
+        btneliminar.setText("Eliminar");
+        jPanel1.add(btneliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 490, -1, -1));
 
         jMenu1.setText("Sistema");
 
