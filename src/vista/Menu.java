@@ -30,10 +30,10 @@ public class Menu extends javax.swing.JFrame {
         jPanel1 = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
+        mnvistaagregar = new javax.swing.JMenuItem();
+        mnvistalistar = new javax.swing.JMenuItem();
         msissalir = new javax.swing.JMenuItem();
         jMenu2 = new javax.swing.JMenu();
-        mempagregar = new javax.swing.JMenuItem();
-        mempmostrar = new javax.swing.JMenuItem();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -50,6 +50,12 @@ public class Menu extends javax.swing.JFrame {
 
         jMenu1.setText("Sistema");
 
+        mnvistaagregar.setText("Agregar");
+        jMenu1.add(mnvistaagregar);
+
+        mnvistalistar.setText("Listar");
+        jMenu1.add(mnvistalistar);
+
         msissalir.setText("Salir");
         msissalir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,14 +66,7 @@ public class Menu extends javax.swing.JFrame {
 
         jMenuBar1.add(jMenu1);
 
-        jMenu2.setText("Empleados");
-
-        mempagregar.setText("Empleado");
-        jMenu2.add(mempagregar);
-
-        mempmostrar.setText("Mostrar Registros de Empleados");
-        jMenu2.add(mempmostrar);
-
+        jMenu2.setText("Ayuda");
         jMenuBar1.add(jMenu2);
 
         setJMenuBar(jMenuBar1);
@@ -136,8 +135,8 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu2;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JPanel jPanel1;
-    public javax.swing.JMenuItem mempagregar;
-    public javax.swing.JMenuItem mempmostrar;
-    private javax.swing.JMenuItem msissalir;
+    public javax.swing.JMenuItem mnvistaagregar;
+    public javax.swing.JMenuItem mnvistalistar;
+    public javax.swing.JMenuItem msissalir;
     // End of variables declaration//GEN-END:variables
 }

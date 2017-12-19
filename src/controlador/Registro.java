@@ -23,6 +23,7 @@ import javax.swing.table.TableModel;
 import modelo.Modelo;
 import vista.Agregar;
 import vista.Listar;
+import vista.Menu;
 
 
 /**
@@ -32,7 +33,10 @@ import vista.Listar;
 public class Registro implements ActionListener, MouseListener {
 
     //Declarar vista
-    Agregar vistaEmpleado;
+    Menu vistaMenu;
+    
+    Agregar vistaEmpleado = new Agregar();
+    
     Listar vistaMostrar = new Listar();
     
 
@@ -58,21 +62,21 @@ public class Registro implements ActionListener, MouseListener {
         btnlimpiar,//botón limpiar de vista 
         
 
-        btnelims120, // boton eliminar sueldos de 120.000.-
-        btnaumentar, // boton aumentar 10% los sueldos
-        
+
         // opciones barra menúmenú
         msissalir, // opción salir barra menú
         mempmostrar, // opción vista empleado barra menú
-        
+        mnvistaagregar,//Menu mostrar ventana agregar
+        mnvistalistar,//Menu vista Listar
+
         // combos
         cboestadocivil, // combo estado civil vista Agregar    
         cbodepartamento, // combo selección departamento vista Agregar
     }
 
     //Agregamos el constructor de la clase
-    public Registro(Agregar vistaEmpleado) {
-        this.vistaEmpleado = vistaEmpleado;
+    public Registro(Menu vistaMenu) {
+        this.vistaMenu = vistaMenu;
         
         //this.vistaElDato.setVisible(true);
 
@@ -83,9 +87,9 @@ public class Registro implements ActionListener, MouseListener {
     public void iniciar() {
 
         try {
-            this.vistaEmpleado.setVisible(true);//Hago que la vista sea visible
-            this.vistaEmpleado.setLocationRelativeTo(null);
-            this.vistaEmpleado.setTitle("Empleados");
+            this.vistaMenu.setVisible(true);//Hago que la vista sea visible
+            this.vistaMenu.setLocationRelativeTo(null);
+            this.vistaMenu.setTitle("Pacientes");
             this.vistaEmpleado.btneliminar.setEnabled(false);
             this.vistaEmpleado.btnmodificar.setEnabled(false);
 
@@ -119,6 +123,12 @@ public class Registro implements ActionListener, MouseListener {
         this.vistaMostrar.btnvolver.addActionListener(this);
        
 
+        this.vistaMenu.mnvistaagregar.setActionCommand("mnavistagregar");
+        this.vistaMenu.mnvistaagregar.addActionListener(this);
+        
+        //Escuchamos menu vista listar
+        this.vistaMenu.mnvistalistar.setActionCommand("mnvistalistar");
+        this.vistaMenu.mnvistalistar.addActionListener(this);
       
         
         
@@ -134,18 +144,18 @@ public class Registro implements ActionListener, MouseListener {
         this.vistaEmpleado.btnbuscar.setActionCommand("btnbuscar");
         this.vistaEmpleado.btnbuscar.addActionListener(this);
         // Escuchamos el bcombo Estado Civil
-        this.vistaEmpleado.cboestadocivil.setActionCommand("cboestadocivil");
-        this.vistaEmpleado.cboestadocivil.addActionListener(this);
+        this.vistaEmpleado.cbootro.setActionCommand("cboestadocivil");
+        this.vistaEmpleado.cbootro.addActionListener(this);
         // Escuchamos el bcombo departamento
-        this.vistaEmpleado.cbodepartamento.setActionCommand("cbodepartamento");
-        this.vistaEmpleado.cbodepartamento.addActionListener(this);
+        this.vistaEmpleado.cbociudad.setActionCommand("cbodepartamento");
+        this.vistaEmpleado.cbociudad.addActionListener(this);
         
         // Escuchamos el opción salir barra menú
-        this.vistaEmpleado.msissalir.setActionCommand("msissalir");
-        this.vistaEmpleado.msissalir.addActionListener(this);
+        this.vistaMenu.msissalir.setActionCommand("msissalir");
+        this.vistaMenu.msissalir.addActionListener(this);
         // Escuchamos opción mostar barra menú
-        this.vistaEmpleado.mempmostrar.setActionCommand("mempmostrar");
-        this.vistaEmpleado.mempmostrar.addActionListener(this);
+        this.vistaMenu.mnvistalistar.setActionCommand("mempmostrar");
+        this.vistaMenu.mnvistalistar.addActionListener(this);
         
         this.vistaMostrar.tbEmpleado.addMouseListener(this);
         
@@ -166,31 +176,31 @@ public class Registro implements ActionListener, MouseListener {
     //limpia los datos de pantalla
     public void limpiartodo() {
         this.vistaEmpleado.txtnombre.setText("");
-        this.vistaEmpleado.cboestadocivil.setSelectedIndex(0);
-        this.vistaEmpleado.txtcodigo.setText("");
+        this.vistaEmpleado.cbootro.setSelectedIndex(0);
+        this.vistaEmpleado.txtrut.setText("");
         this.vistaEmpleado.txtcelular.setText("");
-        this.vistaEmpleado.cbodepartamento.setSelectedIndex(0);
+        this.vistaEmpleado.cbociudad.setSelectedIndex(0);
         this.vistaEmpleado.txtrut.setText("");
         this.vistaEmpleado.txtapellido.setText("");
-        this.vistaEmpleado.txtemail.setText("");
-        this.vistaEmpleado.txtsueldo.setText("");
+        this.vistaEmpleado.txtdireccion.setText("");
+        this.vistaEmpleado.txtedad.setText("");
         this.vistaEmpleado.btneliminar.setEnabled(false);
         this.vistaEmpleado.btnmodificar.setEnabled(false);
-        this.vistaEmpleado.txtcodigo.setEnabled(true);
+        this.vistaEmpleado.txtrut.setEnabled(true);
         this.vistaEmpleado.btnagregar.setEnabled(true);
-        this.vistaEmpleado.txtcodigo.requestFocus();
+        this.vistaEmpleado.txtrut.requestFocus();
         eliminar();
 
     }
     
     public void buscar(){
-        if (esNumero(this.vistaEmpleado.txtcodigo.getText()) == false) {
+        if (esNumero(this.vistaEmpleado.txtrut.getText()) == false) {
                     JOptionPane.showMessageDialog(null, "Ingrese datos numéricos en Codigo, vuelva a intentar");
                     
 
                 } else {
 
-                    int verificacioncodigo = Integer.parseInt(this.vistaEmpleado.txtcodigo.getText());
+                    int verificacioncodigo = Integer.parseInt(this.vistaEmpleado.txtrut.getText());
 
                     if (verificacioncodigo < 1 || verificacioncodigo > 100) {
 
@@ -198,7 +208,7 @@ public class Registro implements ActionListener, MouseListener {
 
                     } else {
 
-                        int codigoss = Integer.parseInt(this.vistaEmpleado.txtcodigo.getText());
+                        int codigoss = Integer.parseInt(this.vistaEmpleado.txtrut.getText());
                         boolean bconfirmacion = false;
                         System.out.println("buscar");
                         
@@ -214,19 +224,19 @@ public class Registro implements ActionListener, MouseListener {
                         this.vistaEmpleado.txtnombre.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 2)));
                         this.vistaEmpleado.txtapellido.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 3)));
                         this.vistaEmpleado.txtcelular.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 4)));
-                        this.vistaEmpleado.txtemail.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 5)));
-                        this.vistaEmpleado.txtsueldo.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 6)));
+                        this.vistaEmpleado.txtdireccion.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 5)));
+                        this.vistaEmpleado.txtedad.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 6)));
                         
                         String ecivil = String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 7));
                         switch (ecivil){
                             case "C":
-                            this.vistaEmpleado.cboestadocivil.setSelectedIndex(1);
+                            this.vistaEmpleado.cbootro.setSelectedIndex(1);
                             break;    
                             case "S":
-                            this.vistaEmpleado.cboestadocivil.setSelectedIndex(2);
+                            this.vistaEmpleado.cbootro.setSelectedIndex(2);
                                 break;
                             case "V":
-                            this.vistaEmpleado.cboestadocivil.setSelectedIndex(3);    
+                            this.vistaEmpleado.cbootro.setSelectedIndex(3);    
                         break;
                     }
 
@@ -235,27 +245,27 @@ public class Registro implements ActionListener, MouseListener {
                         String departamento = String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 8));
                         switch (departamento){
                             case "Administración":
-                            this.vistaEmpleado.cbodepartamento.setSelectedIndex(1);
+                            this.vistaEmpleado.cbociudad.setSelectedIndex(1);
                             break;    
                             case "Bienestar":
-                            this.vistaEmpleado.cbodepartamento.setSelectedIndex(2);
+                            this.vistaEmpleado.cbociudad.setSelectedIndex(2);
                                 break;
                             case "Finanzas":
-                            this.vistaEmpleado.cbodepartamento.setSelectedIndex(3);    
+                            this.vistaEmpleado.cbociudad.setSelectedIndex(3);    
                         break;
                         
                             case "Informática":
-                               this.vistaEmpleado.cbodepartamento.setSelectedIndex(4);   
+                               this.vistaEmpleado.cbociudad.setSelectedIndex(4);   
                                 break;
                                 
                             case "Redes":
-                                this.vistaEmpleado.cbodepartamento.setSelectedIndex(5);  
+                                this.vistaEmpleado.cbociudad.setSelectedIndex(5);  
                                 break;
                     }
                         
                                     this.vistaEmpleado.btneliminar.setEnabled(true);
                                     this.vistaEmpleado.btnmodificar.setEnabled(true);
-                                    this.vistaEmpleado.txtcodigo.setEnabled(false);
+                                    this.vistaEmpleado.txtrut.setEnabled(false);
                                     this.vistaEmpleado.btnagregar.setEnabled(false);
                         
                         
@@ -293,22 +303,22 @@ public class Registro implements ActionListener, MouseListener {
                 String active, active2;
 
 
-                active = String.valueOf(this.vistaEmpleado.cbodepartamento.getSelectedItem());
-                active2 = String.valueOf(this.vistaEmpleado.cboestadocivil.getSelectedItem());
+                active = String.valueOf(this.vistaEmpleado.cbociudad.getSelectedItem());
+                active2 = String.valueOf(this.vistaEmpleado.cbootro.getSelectedItem());
                 
 
                 //System.out.println(active);
                 boolean correcto1 = false,
                  correcto2 = false;
                 
-                if (esNumero(this.vistaEmpleado.txtcodigo.getText())==false){
+                if (esNumero(this.vistaEmpleado.txtrut.getText())==false){
                     JOptionPane.showMessageDialog(null, "Ingrese datos numéricos en Codigo, vuelva a intentar");
                     break;
                     
                 }else {
                 
                 
-                int verificacioncodigo = Integer.parseInt(this.vistaEmpleado.txtcodigo.getText());
+                int verificacioncodigo = Integer.parseInt(this.vistaEmpleado.txtrut.getText());
 
                 //int verificacioncelular = Integer.parseInt(this.vistaEmpleado.txtcelular.getText());
 
@@ -361,22 +371,22 @@ public class Registro implements ActionListener, MouseListener {
                             JOptionPane.showMessageDialog(null, "El numero de celular debe tener 9 digitos, vuelva a intentar");
                         } else {
                             
-                            if (esNumero(this.vistaEmpleado.txtsueldo.getText())==false){
+                            if (esNumero(this.vistaEmpleado.txtedad.getText())==false){
                                 
                                 JOptionPane.showMessageDialog(null, "Debe ingresar monto de Sueldo Bruto, vuelva a intentar");
                             } else {
                                 
-                                if (Integer.parseInt(this.vistaEmpleado.txtsueldo.getText())<120000){
+                                if (Integer.parseInt(this.vistaEmpleado.txtedad.getText())<120000){
                                     JOptionPane.showMessageDialog(null, "El sueldo bruto debe ser mayor o igual a 120000, vuelva a intentar");
                                 } else {
                                 
-                                if (this.vistaEmpleado.txtemail.getText().length() == 0){
+                                if (this.vistaEmpleado.txtdireccion.getText().length() == 0){
                                     JOptionPane.showMessageDialog(null, "Ingrese datos en campo Email, vuelva a intentar");
                                 } else {
 
                             
                                                                                     // int codigo, String rut, String nombre, String apellido, int celular, String email, int sueldo_bruto, String est_civil, String nom_depto
-                            if (this.modeloDato.agregarPaciente(Integer.parseInt(this.vistaEmpleado.txtcodigo.getText()), this.vistaEmpleado.txtrut.getText() ,this.vistaEmpleado.txtnombre.getText(), this.vistaEmpleado.txtapellido.getText(), Integer.parseInt(this.vistaEmpleado.txtcelular.getText()), this.vistaEmpleado.txtemail.getText(), Integer.parseInt(this.vistaEmpleado.txtsueldo.getText()), ecivil, String.valueOf(this.vistaEmpleado.cbodepartamento.getSelectedItem()))) {
+                            if (this.modeloDato.agregarPaciente(Integer.parseInt(this.vistaEmpleado.txtrut.getText()), this.vistaEmpleado.txtrut.getText() ,this.vistaEmpleado.txtnombre.getText(), this.vistaEmpleado.txtapellido.getText(), Integer.parseInt(this.vistaEmpleado.txtcelular.getText()), this.vistaEmpleado.txtdireccion.getText(), Integer.parseInt(this.vistaEmpleado.txtedad.getText()), ecivil, String.valueOf(this.vistaEmpleado.cbociudad.getSelectedItem()))) {
 
                                 JOptionPane.showMessageDialog(null, "El Empleado se agregó correctamente");
 
@@ -406,7 +416,7 @@ public class Registro implements ActionListener, MouseListener {
 
             case btneliminar:
                 //llamamos método para eliminar dato
-                int codigos = Integer.parseInt(this.vistaEmpleado.txtcodigo.getText());
+                int codigos = Integer.parseInt(this.vistaEmpleado.txtrut.getText());
                 boolean confirmacion = false;
                 System.out.println("btneliminar");
                 confirmacion = this.modeloDato.eliminarDato(codigos);
@@ -421,7 +431,7 @@ public class Registro implements ActionListener, MouseListener {
                 
                 
                 //lamamos método para modificar valores del producto menos el código
-                if (this.modeloDato.modificarDato(Integer.parseInt(this.vistaEmpleado.txtcodigo.getText()), this.vistaEmpleado.txtrut.getText() ,this.vistaEmpleado.txtnombre.getText(), this.vistaEmpleado.txtapellido.getText(), Integer.parseInt(this.vistaEmpleado.txtcelular.getText()), this.vistaEmpleado.txtemail.getText(), Integer.parseInt(this.vistaEmpleado.txtsueldo.getText()), ecivil, String.valueOf(this.vistaEmpleado.cbodepartamento.getSelectedItem()))) {
+                if (this.modeloDato.modificarDato(Integer.parseInt(this.vistaEmpleado.txtrut.getText()), this.vistaEmpleado.txtrut.getText() ,this.vistaEmpleado.txtnombre.getText(), this.vistaEmpleado.txtapellido.getText(), Integer.parseInt(this.vistaEmpleado.txtcelular.getText()), this.vistaEmpleado.txtdireccion.getText(), Integer.parseInt(this.vistaEmpleado.txtedad.getText()), ecivil, String.valueOf(this.vistaEmpleado.cbociudad.getSelectedItem()))) {
 
                     JOptionPane.showMessageDialog(null, "El Empleado se modificó correctamente");
 
@@ -479,13 +489,13 @@ public class Registro implements ActionListener, MouseListener {
                
             case cboestadocivil:
  
-                if (this.vistaEmpleado.cboestadocivil.getSelectedItem() == "Casado") {
+                if (this.vistaEmpleado.cbootro.getSelectedItem() == "Casado") {
                     ecivil = "C";
                 }
-                if (this.vistaEmpleado.cboestadocivil.getSelectedItem() == "Soltero") {
+                if (this.vistaEmpleado.cbootro.getSelectedItem() == "Soltero") {
                     ecivil = "S";
                 }
-                if (this.vistaEmpleado.cboestadocivil.getSelectedItem() == "Viudo") {
+                if (this.vistaEmpleado.cbootro.getSelectedItem() == "Viudo") {
                     ecivil = "V";
                 }
 
@@ -503,31 +513,31 @@ public class Registro implements ActionListener, MouseListener {
     }
     public static void main(String[] args) {
         // TODO code application logic here
-        new Registro(new vista.Agregar()).iniciar();
+        new Registro(new vista.Menu()).iniciar();
     }
     @Override
     public void mouseClicked(MouseEvent e) {
         int row = this.vistaMostrar.tbEmpleado.rowAtPoint(e.getPoint());
 
         /* row devolvera -1 si se ha clicado fuera de la fila pero dentro de la tabla, si no devolvera el indice de la fila en la que se ha clicado. */
-        this.vistaEmpleado.txtcodigo.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 0)));
+        this.vistaEmpleado.txtrut.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 0)));
         this.vistaEmpleado.txtrut.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 1)));
         this.vistaEmpleado.txtnombre.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 2)));
         this.vistaEmpleado.txtapellido.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 3)));
         this.vistaEmpleado.txtcelular.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 4)));
-        this.vistaEmpleado.txtemail.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 5)));
-        this.vistaEmpleado.txtsueldo.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 6)));
+        this.vistaEmpleado.txtdireccion.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 5)));
+        this.vistaEmpleado.txtedad.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 6)));
 
         String ecivil = String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 7));
         switch (ecivil) {
             case "C":
-                this.vistaEmpleado.cboestadocivil.setSelectedIndex(1);
+                this.vistaEmpleado.cbootro.setSelectedIndex(1);
                 break;
             case "S":
-                this.vistaEmpleado.cboestadocivil.setSelectedIndex(2);
+                this.vistaEmpleado.cbootro.setSelectedIndex(2);
                 break;
             case "V":
-                this.vistaEmpleado.cboestadocivil.setSelectedIndex(3);
+                this.vistaEmpleado.cbootro.setSelectedIndex(3);
                 break;
         }
         
@@ -536,21 +546,21 @@ public class Registro implements ActionListener, MouseListener {
                         String departamento = String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 8));
                         switch (departamento){
                             case "Administración":
-                            this.vistaEmpleado.cbodepartamento.setSelectedIndex(1);
+                            this.vistaEmpleado.cbociudad.setSelectedIndex(1);
                             break;    
                             case "Bienestar":
-                            this.vistaEmpleado.cbodepartamento.setSelectedIndex(2);
+                            this.vistaEmpleado.cbociudad.setSelectedIndex(2);
                                 break;
                             case "Finanzas":
-                            this.vistaEmpleado.cbodepartamento.setSelectedIndex(3);    
+                            this.vistaEmpleado.cbociudad.setSelectedIndex(3);    
                         break;
                         
                             case "Informática":
-                               this.vistaEmpleado.cbodepartamento.setSelectedIndex(4);   
+                               this.vistaEmpleado.cbociudad.setSelectedIndex(4);   
                                 break;
                                 
                             case "Redes":
-                                this.vistaEmpleado.cbodepartamento.setSelectedIndex(5);  
+                                this.vistaEmpleado.cbociudad.setSelectedIndex(5);  
                                 break;
                     }
     }
