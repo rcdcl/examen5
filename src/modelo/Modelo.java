@@ -7,22 +7,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import sql.Conexion;
-import vista.Empleado;
+import bd.Conexion;
+import vista.Agregar;
 
 public class Modelo extends Conexion {
 
-    Empleado vistaEmpleado;
+    Agregar vistaEmpleado;
 
     public Modelo() {
     }
 
-    public Modelo(Empleado vistaEmpleado) {
+    public Modelo(Agregar vistaEmpleado) {
         this.vistaEmpleado = vistaEmpleado;
     }
 //
 
-    //Agregar datos a la BD
+    //Agregar datos a la BD//
     public boolean agregarEmpleado(int codigo, String rut, String nombre, String apellido, int celular, String email, int sueldo_bruto, String est_civil, String nom_depto) {
         // Se arma la consulta para verificar si el código a ingresar ya existe
 
@@ -95,7 +95,7 @@ public class Modelo extends Conexion {
     //Eliminar Dato de la BD 
     public boolean eliminarDato(int codigo) {
         // Se arma la consulta
-        Empleado ep = new Empleado();
+        Agregar ep = new Agregar();
         Object o = new Object();
 
         System.out.println("buscarDato()");

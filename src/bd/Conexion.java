@@ -1,9 +1,9 @@
-package sql;
+package bd;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
-//Clase genérica de conexión a Base de Datos
+//Clase genérica de conexión a Base de Datos//
 public class Conexion {
 
     public static Connection getConexion() {
@@ -16,7 +16,7 @@ public class Conexion {
             String driverUrl = "jdbc:mysql://localhost/examen";
             Class.forName(driverClassName);
             System.out.println("Proceso de conexión...");
-            connection = DriverManager.getConnection(driverUrl, "root", "MySQL");
+            connection = DriverManager.getConnection(driverUrl, "root", "1Gonzalito");
             System.out.println("Conexión Establecida");
 
         } catch (Exception e) {

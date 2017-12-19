@@ -223,7 +223,6 @@
         <Component class="javax.swing.JButton" name="btnsalir">
           <Properties>
             <Property name="text" type="java.lang.String" value="Limpiar Casillas"/>
-            <Property name="actionCommand" type="java.lang.String" value="Limpiar Casillas"/>
           </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnsalirActionPerformed"/>

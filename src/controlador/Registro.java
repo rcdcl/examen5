@@ -18,19 +18,19 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableColumnModel;
 import javax.swing.table.TableModel;
 import modelo.Modelo;
-import vista.Empleado;
-import vista.Mostrar;
+import vista.Agregar;
+import vista.Listar;
 
 
 /**
  *
- * @author MBpro_Rafa
+ * @author MBpro_Rafa//
  */
-public class Controlador implements ActionListener {
+public class Registro implements ActionListener {
 
     //Declarar vista
-    Empleado vistaEmpleado;
-    Mostrar vistaMostrar = new Mostrar();
+    Agregar vistaEmpleado;
+    Listar vistaMostrar = new Listar();
     
 
     //Declaro el modelo
@@ -41,14 +41,14 @@ public class Controlador implements ActionListener {
 
     //Metodo enumerar donde se agregan los botones o elementos que van a desencadenar acciones (que voy a escuchar)
     public enum Accion {
-        btnagregar,//boton agregar de vista Empleado
-        btnmodificar,// botón modificar de vista Empleado
-        btneliminar,// botón eliminar de vista Empleado
-        btnsalir,// botón salir vista Empleado
-        btnbuscar,// botón buscar vista Empleado
+        btnagregar,//boton agregar de vista Agregar
+        btnmodificar,// botón modificar de vista Agregar
+        btneliminar,// botón eliminar de vista Agregar
+        btnsalir,// botón salir vista Agregar
+        btnbuscar,// botón buscar vista Agregar
         btnmostrarredes, //botón mostrar empleados redes
         
-        btnmostrar,// botón mostrar de vista Mostrar  
+        btnmostrar,// botón mostrar de vista Listar  
         btnvolver, // botón volver de vista Mostar
         btnlimpiar,//botón limpiar de vista 
         
@@ -61,12 +61,12 @@ public class Controlador implements ActionListener {
         mempmostrar, // opción vista empleado barra menú
         
         // combos
-        cboestadocivil, // combo estado civil vista Empleado    
-        cbodepartamento, // combo selección departamento vista Empleado
+        cboestadocivil, // combo estado civil vista Agregar    
+        cbodepartamento, // combo selección departamento vista Agregar
     }
 
     //Agregamos el constructor de la clase
-    public Controlador(Empleado vistaEmpleado) {
+    public Registro(Agregar vistaEmpleado) {
         this.vistaEmpleado = vistaEmpleado;
         //this.vistaElDato.setVisible(true);
 
@@ -108,16 +108,16 @@ public class Controlador implements ActionListener {
         // Escuchamos el boton que muestra el dato
         this.vistaMostrar.btnmostrarredes.setActionCommand("btnmostrarredes");
         this.vistaMostrar.btnmostrarredes.addActionListener(this);
-        // Escuchamos el boton volver de vista Mostrar
+        // Escuchamos el boton volver de vista Listar
         this.vistaMostrar.btnvolver.setActionCommand("btnvolver");
         this.vistaMostrar.btnvolver.addActionListener(this);
        
 
-        // Escuchamos el boton elimiar sueldos 120000 de vista Mostrar
+        // Escuchamos el boton elimiar sueldos 120000 de vista Listar
         this.vistaMostrar.btnelims120.setActionCommand("btnelims120");
         this.vistaMostrar.btnelims120.addActionListener(this);
 
-        // Escuchamos el boton umenta sueldos en 10% de vista Mostrar
+        // Escuchamos el boton umenta sueldos en 10% de vista Listar
         this.vistaMostrar.btnaumentar.setActionCommand("btnaumentar");
         this.vistaMostrar.btnaumentar.addActionListener(this);        
         
@@ -288,7 +288,6 @@ public class Controlador implements ActionListener {
                 
                 try{
                 
-                Inicio ep = new Inicio();
                 String active, active2;
 
 
@@ -524,5 +523,10 @@ public class Controlador implements ActionListener {
         }
 
     }
+    public static void main(String[] args) {
+        // TODO code application logic here
+        new Registro(new vista.Agregar()).iniciar();
+    }
+
 
 }
