@@ -95,7 +95,7 @@ public class Modelo extends Conexion {
     
         
     //Metodo Buscar RUT  de la BD
-    public DefaultTableModel buscarRut(String rut) throws SQLException  {
+    public DefaultTableModel buscarRut(String rut)   {
         DefaultTableModel tablemodel = new DefaultTableModel();
         int registros = 0;
         String[] columNames = {"Rut", "Nombre", "Género", "Edad", "Direccion", "Ciudad", "Isapre", "Donante"};
@@ -153,17 +153,17 @@ public class Modelo extends Conexion {
 
 
     //Eliminar Dato de la BD 
-    public boolean eliminarDato(int codigo) {
+    public boolean eliminarDato(String rut) {
         // Se arma la consulta
         Agregar ep = new Agregar();
         Object o = new Object();
 
         System.out.println("buscarDato()");
-        System.out.println(codigo);
+        System.out.println(rut);
         //ResultSet rs = null;
 
         try {
-            String query = "delete from empleados where codigo ='" + codigo + "'";
+            String query = "delete from paciente where rut ='" + rut + "'";
             PreparedStatement pstm = this.getConexion().prepareStatement(query);
             pstm.execute(query);
 
@@ -225,13 +225,14 @@ public class Modelo extends Conexion {
    
 
     //Modificar los datos de la BD
-    public boolean modificarDato(int codigo, String rut, String nombre, String apellido, int celular, String email, int sueldo_bruto, String est_civil, String nom_depto){
-    String query = "update empleados set rut= '" + rut + "', nombre= '" + nombre + "', apellido= '" + apellido + "', celular= '" + celular + "', email= '" + email + "', sueldo_bruto= '" + sueldo_bruto + "', est_civil= '" + est_civil + "', nom_depto= '" + nom_depto + "' where codigo ='" + codigo + "'";
+    public boolean modificarDato(String rut, String nombre, String genero, int edad, String direccion, String ciudad, String isapre, int donante){
+    String query = "update paciente set nombre= '" + nombre + "', genero= '" + genero + "', edad= '" + edad + "', direccion= '" + direccion + "', ciudad= '" + ciudad + "', isapre= '" + isapre + "', donante= '" + donante +"' where rut ='" + rut + "'";
 
         //se ejecuta update
         try {
             PreparedStatement pstm = this.getConexion().prepareStatement(query);
-            pstm.execute();
+            int r1 = pstm.executeUpdate();
+            //pstm.execute();
             pstm.close();
             getConexion().close();
             return true;
@@ -239,16 +240,14 @@ public class Modelo extends Conexion {
             System.err.println(e.getMessage());
 
         }
-
         return false;
-
     }
     
-    public boolean existeCodigo(int codigo) {
+    public boolean existeRUT(String rut) {
             boolean regreso=false;
 
 try {
-            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(*) as total from empleados where codigo ='" + codigo + "'");
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT count(*) as total from paciente where rut ='" + rut + "'");
             ResultSet res = pstm.executeQuery();
             res.next();
             int registros = res.getInt("total");

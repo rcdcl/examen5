@@ -31,42 +31,32 @@ public class Agregar extends javax.swing.JFrame {
         isapre = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         txtnombre = new javax.swing.JTextField();
-        txtcelular = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        jLabel4 = new javax.swing.JLabel();
-        jLabel7 = new javax.swing.JLabel();
         btnagregar = new javax.swing.JButton();
-        btnmodificar = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
         btnsalir = new javax.swing.JButton();
         cbociudad = new javax.swing.JComboBox<>();
-        btnbuscar = new javax.swing.JButton();
-        cbootro = new javax.swing.JComboBox<>();
         txtrut = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtapellido = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
         txtdireccion = new javax.swing.JTextField();
         jLabel8 = new javax.swing.JLabel();
         txtedad = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        btneliminar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        optfem = new javax.swing.JRadioButton();
+        optmasc = new javax.swing.JRadioButton();
         jLabel1 = new javax.swing.JLabel();
-        jRadioButton3 = new javax.swing.JRadioButton();
-        jRadioButton4 = new javax.swing.JRadioButton();
+        optisapresi = new javax.swing.JRadioButton();
+        optisapreno = new javax.swing.JRadioButton();
         ckdonante = new javax.swing.JCheckBox();
         jLabel12 = new javax.swing.JLabel();
-        btnsalir1 = new javax.swing.JButton();
+        btnlimpiar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
         jPanel1.add(txtnombre, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 160, 220, -1));
-        jPanel1.add(txtcelular, new org.netbeans.lib.awtextra.AbsoluteConstraints(830, 120, 110, -1));
 
         jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel2.setText("Nombre");
@@ -76,24 +66,14 @@ public class Agregar extends javax.swing.JFrame {
         jLabel3.setText("Ciudad");
         jPanel1.add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 370, 110, -1));
 
-        jLabel4.setText("Celular");
-        jPanel1.add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(870, 100, -1, -1));
-
-        jLabel7.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel7.setText("Departamento");
-        jPanel1.add(jLabel7, new org.netbeans.lib.awtextra.AbsoluteConstraints(620, 240, 150, -1));
-
         btnagregar.setText("Guardar");
         btnagregar.setToolTipText("");
-        jPanel1.add(btnagregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(80, 580, 210, 70));
-
-        btnmodificar.setText("Modificar Datos Empleado");
-        jPanel1.add(btnmodificar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 340, 220, 70));
+        jPanel1.add(btnagregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 210, 70));
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel9.setText("Agregar Paciente");
-        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 340, 40));
+        jPanel1.add(jLabel9, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 20, 340, 50));
 
         btnsalir.setText("Salir");
         btnsalir.addActionListener(new java.awt.event.ActionListener() {
@@ -101,75 +81,62 @@ public class Agregar extends javax.swing.JFrame {
                 btnsalirActionPerformed(evt);
             }
         });
-        jPanel1.add(btnsalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(520, 580, 210, 70));
+        jPanel1.add(btnsalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 290, 210, 70));
 
-        cbociudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Administración", "Bienestar", "Finanzas", "Informática", "Redes" }));
+        cbociudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Santiago", "Valparaíso", "Concepción", "Antofagasta", "Puerto Montt" }));
         jPanel1.add(cbociudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 190, -1));
-
-        btnbuscar.setText("Buscar Empleado");
-        jPanel1.add(btnbuscar, new org.netbeans.lib.awtextra.AbsoluteConstraints(690, 420, 220, 70));
-
-        cbootro.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Casado", "Soltero", "Viudo" }));
-        jPanel1.add(cbootro, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 160, 130, -1));
         jPanel1.add(txtrut, new org.netbeans.lib.awtextra.AbsoluteConstraints(200, 120, 220, -1));
 
         jLabel5.setText("RUT");
         jLabel5.setToolTipText("");
         jPanel1.add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(160, 120, -1, -1));
-        jPanel1.add(txtapellido, new org.netbeans.lib.awtextra.AbsoluteConstraints(650, 120, 160, -1));
-
-        jLabel6.setText("Apellido");
-        jPanel1.add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 100, -1, -1));
         jPanel1.add(txtdireccion, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 310, 270, -1));
 
         jLabel8.setText("Direccion");
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 310, -1, -1));
         jPanel1.add(txtedad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 260, 150, -1));
 
-        jLabel10.setText("Sueldo Bruto");
-        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 260, -1, -1));
-
-        btneliminar.setText("Eliminar");
-        jPanel1.add(btneliminar, new org.netbeans.lib.awtextra.AbsoluteConstraints(780, 290, -1, -1));
+        jLabel10.setText("Edad");
+        jPanel1.add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(150, 260, -1, -1));
 
         jLabel11.setText("Género");
         jPanel1.add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(140, 220, -1, -1));
 
-        genero.add(jRadioButton1);
-        jRadioButton1.setText("Femenino");
-        jRadioButton1.addActionListener(new java.awt.event.ActionListener() {
+        genero.add(optfem);
+        optfem.setText("Femenino");
+        optfem.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jRadioButton1ActionPerformed(evt);
+                optfemActionPerformed(evt);
             }
         });
-        jPanel1.add(jRadioButton1, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, -1, -1));
+        jPanel1.add(optfem, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 210, -1, -1));
 
-        genero.add(jRadioButton2);
-        jRadioButton2.setText("Masculino");
-        jPanel1.add(jRadioButton2, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, -1, -1));
+        genero.add(optmasc);
+        optmasc.setText("Masculino");
+        jPanel1.add(optmasc, new org.netbeans.lib.awtextra.AbsoluteConstraints(340, 210, -1, -1));
 
         jLabel1.setText("Isapre");
         jPanel1.add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 410, -1, -1));
 
-        isapre.add(jRadioButton3);
-        jRadioButton3.setText("Si");
-        jPanel1.add(jRadioButton3, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 410, -1, -1));
+        isapre.add(optisapresi);
+        optisapresi.setText("Si");
+        jPanel1.add(optisapresi, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 410, -1, -1));
 
-        isapre.add(jRadioButton4);
-        jRadioButton4.setText("No");
-        jPanel1.add(jRadioButton4, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 410, -1, -1));
+        isapre.add(optisapreno);
+        optisapreno.setText("No");
+        jPanel1.add(optisapreno, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 410, -1, -1));
         jPanel1.add(ckdonante, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 450, -1, -1));
 
         jLabel12.setText("Donante");
         jPanel1.add(jLabel12, new org.netbeans.lib.awtextra.AbsoluteConstraints(130, 460, -1, -1));
 
-        btnsalir1.setText("Limpiar");
-        btnsalir1.addActionListener(new java.awt.event.ActionListener() {
+        btnlimpiar.setText("Limpiar");
+        btnlimpiar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnsalir1ActionPerformed(evt);
+                btnlimpiarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnsalir1, new org.netbeans.lib.awtextra.AbsoluteConstraints(300, 580, 210, 70));
+        jPanel1.add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 210, 70));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,13 +158,13 @@ public class Agregar extends javax.swing.JFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_btnsalirActionPerformed
 
-    private void jRadioButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jRadioButton1ActionPerformed
+    private void optfemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_optfemActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jRadioButton1ActionPerformed
+    }//GEN-LAST:event_optfemActionPerformed
 
-    private void btnsalir1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnsalir1ActionPerformed
+    private void btnlimpiarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnlimpiarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnsalir1ActionPerformed
+    }//GEN-LAST:event_btnlimpiarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -228,6 +195,10 @@ public class Agregar extends javax.swing.JFrame {
         //</editor-fold>
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -239,13 +210,9 @@ public class Agregar extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     public javax.swing.JButton btnagregar;
-    public javax.swing.JButton btnbuscar;
-    public javax.swing.JButton btneliminar;
-    public javax.swing.JButton btnmodificar;
+    public javax.swing.JButton btnlimpiar;
     public javax.swing.JButton btnsalir;
-    public javax.swing.JButton btnsalir1;
     public javax.swing.JComboBox<String> cbociudad;
-    public javax.swing.JComboBox<String> cbootro;
     public javax.swing.JCheckBox ckdonante;
     private javax.swing.ButtonGroup genero;
     private javax.swing.ButtonGroup isapre;
@@ -255,19 +222,14 @@ public class Agregar extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
-    public javax.swing.JRadioButton jRadioButton1;
-    public javax.swing.JRadioButton jRadioButton2;
-    public javax.swing.JRadioButton jRadioButton3;
-    public javax.swing.JRadioButton jRadioButton4;
-    public javax.swing.JTextField txtapellido;
-    public javax.swing.JTextField txtcelular;
+    public javax.swing.JRadioButton optfem;
+    public javax.swing.JRadioButton optisapreno;
+    public javax.swing.JRadioButton optisapresi;
+    public javax.swing.JRadioButton optmasc;
     public javax.swing.JTextField txtdireccion;
     public javax.swing.JTextField txtedad;
     public javax.swing.JTextField txtnombre;

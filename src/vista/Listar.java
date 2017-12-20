@@ -29,11 +29,11 @@ public class Listar extends javax.swing.JFrame {
 
         jScrollPane2 = new javax.swing.JScrollPane();
         tbEmpleado = new javax.swing.JTable();
-        btnmostrar = new javax.swing.JButton();
+        btnbuscar = new javax.swing.JButton();
         btnvolver = new javax.swing.JButton();
-        btnmostrarredes = new javax.swing.JButton();
-        btnelims120 = new javax.swing.JButton();
-        btnaumentar = new javax.swing.JButton();
+        txtbuscar = new javax.swing.JTextField();
+        btnmodificarlistar = new javax.swing.JButton();
+        btneliminar = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -47,25 +47,18 @@ public class Listar extends javax.swing.JFrame {
         ));
         jScrollPane2.setViewportView(tbEmpleado);
 
-        btnmostrar.setText("Mostrar Todos los Empleado");
-        btnmostrar.addActionListener(new java.awt.event.ActionListener() {
+        btnbuscar.setText("Buscar");
+        btnbuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnmostrarActionPerformed(evt);
+                btnbuscarActionPerformed(evt);
             }
         });
 
         btnvolver.setText("Volver");
 
-        btnmostrarredes.setText("Mostrar Empleados Dpto. Redes");
-        btnmostrarredes.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnmostrarredesActionPerformed(evt);
-            }
-        });
+        btnmodificarlistar.setText("Modificar");
 
-        btnelims120.setText("Eliminar Empleados Sueldos 120000");
-
-        btnaumentar.setText("Aumentar todos los sueldos en 10%");
+        btneliminar.setText("Eliminar");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -74,50 +67,46 @@ public class Listar extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(127, 127, 127)
-                        .addComponent(btnmostrarredes, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnmostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 234, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(48, 48, 48)
+                        .addGap(440, 440, 440)
+                        .addComponent(btneliminar)
+                        .addGap(18, 18, 18)
+                        .addComponent(btnmodificarlistar)
+                        .addGap(18, 18, 18)
                         .addComponent(btnvolver))
                     .addGroup(layout.createSequentialGroup()
-                        .addGap(25, 25, 25)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGap(217, 217, 217)
-                                .addComponent(btnelims120)
-                                .addGap(144, 144, 144)
-                                .addComponent(btnaumentar))
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 938, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(28, Short.MAX_VALUE))
+                        .addGap(37, 37, 37)
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 766, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(37, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 230, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(42, 42, 42)
+                .addComponent(btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(76, 76, 76))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnelims120)
-                    .addComponent(btnaumentar))
-                .addGap(28, 28, 28)
+                    .addComponent(btnbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtbuscar, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 350, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(btnmostrar, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnvolver)
-                    .addComponent(btnmostrarredes, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(btnmodificarlistar)
+                    .addComponent(btneliminar))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void btnmostrarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmostrarActionPerformed
+    private void btnbuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnbuscarActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnmostrarActionPerformed
-
-    private void btnmostrarredesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmostrarredesActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnmostrarredesActionPerformed
+    }//GEN-LAST:event_btnbuscarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -146,6 +135,8 @@ public class Listar extends javax.swing.JFrame {
         }
         //</editor-fold>
         //</editor-fold>
+        //</editor-fold>
+        //</editor-fold>
 
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
@@ -156,12 +147,12 @@ public class Listar extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnaumentar;
-    private javax.swing.JButton btnelims120;
-    public javax.swing.JButton btnmostrar;
-    private javax.swing.JButton btnmostrarredes;
+    public javax.swing.JButton btnbuscar;
+    public javax.swing.JButton btneliminar;
+    public javax.swing.JButton btnmodificarlistar;
     public javax.swing.JButton btnvolver;
     private javax.swing.JScrollPane jScrollPane2;
     public javax.swing.JTable tbEmpleado;
+    public javax.swing.JTextField txtbuscar;
     // End of variables declaration//GEN-END:variables
 }

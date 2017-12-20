@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -25,28 +26,23 @@ import vista.Agregar;
 import vista.Listar;
 import vista.Menu;
 
-
 /**
  *
- * @author MBpro_Rafa//
+ * @author MBpro_Rafa && MBpro_Erick :P
  */
 public class Registro implements ActionListener, MouseListener {
 
     //Declarar vista
     Menu vistaMenu;
-    
-    Agregar vistaEmpleado = new Agregar();
-    
-    Listar vistaMostrar = new Listar();
-    
+
+    Agregar vistaAgregar = new Agregar();
+
+    Listar vistaListar = new Listar();
 
     //Declaro el modelo
     Modelo modeloDato = new Modelo();
-    
-    
+
     String ecivil;
-
-
 
     //Metodo enumerar donde se agregan los botones o elementos que van a desencadenar acciones (que voy a escuchar)
     public enum Accion {
@@ -56,13 +52,11 @@ public class Registro implements ActionListener, MouseListener {
         btnsalir,// botón salir vista Agregar
         btnbuscar,// botón buscar vista Agregar
         btnmostrarredes, //botón mostrar empleados redes
-        
+
         btnmostrar,// botón mostrar de vista Listar  
         btnvolver, // botón volver de vista Mostar
         btnlimpiar,//botón limpiar de vista 
-        
-
-
+        btnmodificarlistar,
         // opciones barra menúmenú
         msissalir, // opción salir barra menú
         mempmostrar, // opción vista empleado barra menú
@@ -77,11 +71,9 @@ public class Registro implements ActionListener, MouseListener {
     //Agregamos el constructor de la clase
     public Registro(Menu vistaMenu) {
         this.vistaMenu = vistaMenu;
-        
+
         //this.vistaElDato.setVisible(true);
-
     }
-
 
     //Creamos metodo para iniciar
     public void iniciar() {
@@ -90,13 +82,9 @@ public class Registro implements ActionListener, MouseListener {
             this.vistaMenu.setVisible(true);//Hago que la vista sea visible
             this.vistaMenu.setLocationRelativeTo(null);
             this.vistaMenu.setTitle("Pacientes");
-            this.vistaEmpleado.btneliminar.setEnabled(false);
-            this.vistaEmpleado.btnmodificar.setEnabled(false);
-
-
 
             //UIManager.setLookAndFeel("com.sun.java.swing.plaf.windows.WindowsLookAndFeel");
-            //SwingUtilities.updateComponentTreeUI(vistaEmpleado);
+            //SwingUtilities.updateComponentTreeUI(vistaAgregar);
         } catch (Exception ex) {
         }
 
@@ -105,333 +93,325 @@ public class Registro implements ActionListener, MouseListener {
         //catch (InstantiationException ex) {}
         //catch (IllegalAccessException ex) {}
         // Escuchamos el boton que ingresa el dato
-        this.vistaEmpleado.btnagregar.setActionCommand("btnagregar");
-        this.vistaEmpleado.btnagregar.addActionListener(this);
+        this.vistaAgregar.btnagregar.setActionCommand("btnagregar");
+        this.vistaAgregar.btnagregar.addActionListener(this);
         // Escuchamos el boton que modifica el dato
-        this.vistaEmpleado.btnmodificar.setActionCommand("btnmodificar");
-        this.vistaEmpleado.btnmodificar.addActionListener(this);
+
         // Escuchamos el boton que elimina el dato
-        this.vistaEmpleado.btneliminar.setActionCommand("btneliminar");
-        this.vistaEmpleado.btneliminar.addActionListener(this);
+        // Escuchamos el boton que limpia
+        this.vistaAgregar.btnlimpiar.setActionCommand("btnlimpiar");
+        this.vistaAgregar.btnlimpiar.addActionListener(this);
         // Escuchamos el boton que muestra el dato
-        this.vistaMostrar.btnmostrar.setActionCommand("btnmostrar");
-        this.vistaMostrar.btnmostrar.addActionListener(this);
+        this.vistaListar.btnbuscar.setActionCommand("btnmostrar");
+        this.vistaListar.btnbuscar.addActionListener(this);
         // Escuchamos el boton que muestra el dato
 
         // Escuchamos el boton volver de vista Listar
-        this.vistaMostrar.btnvolver.setActionCommand("btnvolver");
-        this.vistaMostrar.btnvolver.addActionListener(this);
-       
+        this.vistaListar.btnvolver.setActionCommand("btnvolver");
+        this.vistaListar.btnvolver.addActionListener(this);
+        // Escuchamos el boton eliminar de vista Listar
+        this.vistaListar.btneliminar.setActionCommand("btneliminar");
+        this.vistaListar.btneliminar.addActionListener(this);
+        // Escuchamos el boton modificar de vista Listar
+        this.vistaListar.btnmodificarlistar.setActionCommand("btnmodificarlistar");
+        this.vistaListar.btnmodificarlistar.addActionListener(this);
 
         this.vistaMenu.mnvistaagregar.setActionCommand("mnavistagregar");
         this.vistaMenu.mnvistaagregar.addActionListener(this);
-        
+
         //Escuchamos menu vista listar
         this.vistaMenu.mnvistalistar.setActionCommand("mnvistalistar");
         this.vistaMenu.mnvistalistar.addActionListener(this);
-      
-        
-        
-        
+
         // Escuchamos el boton que limpia datos de pantalla
-        //this.vistaEmpleado.btnlimpiar.setActionCommand("btnlimpiar");
-        //this.vistaEmpleado.btnlimpiar.addActionListener(this);
-        
+        //this.vistaAgregar.btnlimpiar.setActionCommand("btnlimpiar");
+        //this.vistaAgregar.btnlimpiar.addActionListener(this);
         // Escuchamos el boton que salir
-        this.vistaEmpleado.btnsalir.setActionCommand("btnsalir");
-        this.vistaEmpleado.btnsalir.addActionListener(this);
+        this.vistaAgregar.btnsalir.setActionCommand("btnsalir");
+        this.vistaAgregar.btnsalir.addActionListener(this);
         // Escuchamos el boton que buscar
-        this.vistaEmpleado.btnbuscar.setActionCommand("btnbuscar");
-        this.vistaEmpleado.btnbuscar.addActionListener(this);
+
         // Escuchamos el bcombo Estado Civil
-        this.vistaEmpleado.cbootro.setActionCommand("cboestadocivil");
-        this.vistaEmpleado.cbootro.addActionListener(this);
         // Escuchamos el bcombo departamento
-        this.vistaEmpleado.cbociudad.setActionCommand("cbodepartamento");
-        this.vistaEmpleado.cbociudad.addActionListener(this);
-        
+        this.vistaAgregar.cbociudad.setActionCommand("cbodepartamento");
+        this.vistaAgregar.cbociudad.addActionListener(this);
+
         // Escuchamos el opción salir barra menú
         this.vistaMenu.msissalir.setActionCommand("msissalir");
         this.vistaMenu.msissalir.addActionListener(this);
-        // Escuchamos opción mostar barra menú
-        this.vistaMenu.mnvistalistar.setActionCommand("mempmostrar");
+        // Escuchamos opción mostar barra menú listar
+        this.vistaMenu.mnvistalistar.setActionCommand("mnvistalistar");
         this.vistaMenu.mnvistalistar.addActionListener(this);
-        
-        this.vistaMostrar.tbEmpleado.addMouseListener(this);
-        
+        // Escuchamos opción mostar barra menú agregar
+        this.vistaMenu.mnvistaagregar.setActionCommand("mnvistaagregar");
+        this.vistaMenu.mnvistaagregar.addActionListener(this);
+
+        this.vistaListar.tbEmpleado.addMouseListener(this);
 
     }
-    
+
     //limpia la tabla
     public void eliminar() {
-        DefaultTableModel tb = (DefaultTableModel) this.vistaMostrar.tbEmpleado.getModel();
-        int a = this.vistaMostrar.tbEmpleado.getRowCount() - 1;
+        DefaultTableModel tb = (DefaultTableModel) this.vistaListar.tbEmpleado.getModel();
+        int a = this.vistaListar.tbEmpleado.getRowCount() - 1;
         System.out.println(a);
         for (int i = a; i >= 0; i--) {
             tb.removeRow(tb.getRowCount() - 1);
         }
 
     }
-    
+
     //limpia los datos de pantalla
     public void limpiartodo() {
-        this.vistaEmpleado.txtnombre.setText("");
-        this.vistaEmpleado.cbootro.setSelectedIndex(0);
-        this.vistaEmpleado.txtrut.setText("");
-        this.vistaEmpleado.txtcelular.setText("");
-        this.vistaEmpleado.cbociudad.setSelectedIndex(0);
-        this.vistaEmpleado.txtrut.setText("");
-        this.vistaEmpleado.txtapellido.setText("");
-        this.vistaEmpleado.txtdireccion.setText("");
-        this.vistaEmpleado.txtedad.setText("");
-        this.vistaEmpleado.btneliminar.setEnabled(false);
-        this.vistaEmpleado.btnmodificar.setEnabled(false);
-        this.vistaEmpleado.txtrut.setEnabled(true);
-        this.vistaEmpleado.btnagregar.setEnabled(true);
-        this.vistaEmpleado.txtrut.requestFocus();
+        this.vistaAgregar.txtnombre.setText("");
+
+        this.vistaAgregar.txtrut.setText("");
+
+        this.vistaAgregar.cbociudad.setSelectedIndex(0);
+        this.vistaAgregar.txtrut.setText("");
+
+        this.vistaAgregar.txtdireccion.setText("");
+        this.vistaAgregar.txtedad.setText("");
+
+        this.vistaAgregar.txtrut.setEnabled(true);
+        this.vistaAgregar.btnagregar.setEnabled(true);
+        this.vistaAgregar.txtrut.requestFocus();
         eliminar();
 
     }
-    
-    public void buscar(){
-        if (esNumero(this.vistaEmpleado.txtrut.getText()) == false) {
-                    JOptionPane.showMessageDialog(null, "Ingrese datos numéricos en Codigo, vuelva a intentar");
-                    
+
+    public void buscar()  {
+ 
+
+                String rut;
+                rut = this.vistaAgregar.txtrut.getText();
+                boolean bconfirmacion = false;
+                System.out.println("buscar");
+
+                this.vistaListar.tbEmpleado.setModel((TableModel) this.modeloDato.buscarRut(rut));
+
+                if (String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 1)) == "null") {
+                    JOptionPane.showMessageDialog(null, "El Código no existe, vuelva a intentar");
+                    limpiartodo();
 
                 } else {
 
-                    int verificacioncodigo = Integer.parseInt(this.vistaEmpleado.txtrut.getText());
+                    this.vistaAgregar.txtrut.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 0)));
+                    this.vistaAgregar.txtnombre.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 1)));
+                    String sexo = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 2));
+                    if (sexo == "M") {
+                        this.vistaAgregar.optmasc.setSelected(true);
+                    }
+                    if (sexo == "F") {
+                        this.vistaAgregar.optfem.setSelected(true);
+                    }
 
-                    if (verificacioncodigo < 1 || verificacioncodigo > 100) {
+                    this.vistaAgregar.txtedad.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 3)));
 
-                        JOptionPane.showMessageDialog(null, "El código debe ser > a 0 y <= 100. Intente nuevamente");
+                    this.vistaAgregar.txtdireccion.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 4)));
 
+                    String ciudad = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 5));
+                    switch (ciudad) {
+                        case "Santiago":
+                            this.vistaAgregar.cbociudad.setSelectedIndex(1);
+                            break;
+                        case "Valparaíso":
+                            this.vistaAgregar.cbociudad.setSelectedIndex(2);
+                            break;
+                        case "Concepción":
+                            this.vistaAgregar.cbociudad.setSelectedIndex(3);
+                            break;
+
+                        case "Antofagasta":
+                            this.vistaAgregar.cbociudad.setSelectedIndex(4);
+                            break;
+
+                        case "Puerto Montt":
+                            this.vistaAgregar.cbociudad.setSelectedIndex(5);
+                            break;
+                    }
+
+                    String isapre = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 6));
+                    if (isapre == "S") {
+                        this.vistaAgregar.optisapresi.setSelected(true);
+                    }
+                    if (isapre == "N") {
+                        this.vistaAgregar.optisapreno.setSelected(true);
+                    }
+
+                    String donante = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 7));
+                    if (donante == "1") {
+                        this.vistaAgregar.ckdonante.setSelected(true);
+                    }
+
+                    this.vistaAgregar.txtrut.setEnabled(false);
+                    this.vistaAgregar.btnagregar.setEnabled(false);
+
+                    if (bconfirmacion == true) {
+
+                        JOptionPane.showMessageDialog(null, "El registro fue eliminado con éxito");
                     } else {
-
-                        int codigoss = Integer.parseInt(this.vistaEmpleado.txtrut.getText());
-                        boolean bconfirmacion = false;
-                        System.out.println("buscar");
-                        
-                        this.vistaMostrar.tbEmpleado.setModel((TableModel) this.modeloDato.buscarDato(codigoss));
-                        
-                        if (String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 1))=="null"){
-                            JOptionPane.showMessageDialog(null, "El Código no existe, vuelva a intentar");
-                            limpiartodo();
-                            
-                        } else {
-                        
-                        this.vistaEmpleado.txtrut.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 1)));
-                        this.vistaEmpleado.txtnombre.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 2)));
-                        this.vistaEmpleado.txtapellido.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 3)));
-                        this.vistaEmpleado.txtcelular.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 4)));
-                        this.vistaEmpleado.txtdireccion.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 5)));
-                        this.vistaEmpleado.txtedad.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 6)));
-                        
-                        String ecivil = String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 7));
-                        switch (ecivil){
-                            case "C":
-                            this.vistaEmpleado.cbootro.setSelectedIndex(1);
-                            break;    
-                            case "S":
-                            this.vistaEmpleado.cbootro.setSelectedIndex(2);
-                                break;
-                            case "V":
-                            this.vistaEmpleado.cbootro.setSelectedIndex(3);    
-                        break;
+                        // JOptionPane.showMessageDialog(null, "El código de empleado no existe, vuelva a intentarlo");
                     }
-
-                        
-                        
-                        String departamento = String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 8));
-                        switch (departamento){
-                            case "Administración":
-                            this.vistaEmpleado.cbociudad.setSelectedIndex(1);
-                            break;    
-                            case "Bienestar":
-                            this.vistaEmpleado.cbociudad.setSelectedIndex(2);
-                                break;
-                            case "Finanzas":
-                            this.vistaEmpleado.cbociudad.setSelectedIndex(3);    
-                        break;
-                        
-                            case "Informática":
-                               this.vistaEmpleado.cbociudad.setSelectedIndex(4);   
-                                break;
-                                
-                            case "Redes":
-                                this.vistaEmpleado.cbociudad.setSelectedIndex(5);  
-                                break;
-                    }
-                        
-                                    this.vistaEmpleado.btneliminar.setEnabled(true);
-                                    this.vistaEmpleado.btnmodificar.setEnabled(true);
-                                    this.vistaEmpleado.txtrut.setEnabled(false);
-                                    this.vistaEmpleado.btnagregar.setEnabled(false);
-                        
-                        
-                        if (bconfirmacion == true) {
-                            
-                            
-                            JOptionPane.showMessageDialog(null, "El registro fue eliminado con éxito");
-                        } else {
-                           // JOptionPane.showMessageDialog(null, "El código de empleado no existe, vuelva a intentarlo");
-                        }
-                    }}
                 }
+            
     }
-    
-    static boolean esNumero(String cadena){
-	try {
-		Integer.parseInt(cadena);
-		return true;
-	} catch (NumberFormatException nfe){
-		return false;
+
+    static boolean esNumero(String cadena) {
+        try {
+            Integer.parseInt(cadena);
+            return true;
+        } catch (NumberFormatException nfe) {
+            return false;
         }
     }
-    
-    
-    
 
     @Override
     public void actionPerformed(ActionEvent e) {
         switch (Accion.valueOf(e.getActionCommand())) {
+
+            case mnvistaagregar:
+                this.vistaAgregar.setVisible(true);
+                this.vistaAgregar.setTitle("Agregar Pacientes");
+                this.vistaAgregar.setLocationRelativeTo(null);
+                break;
+
+            case mnvistalistar:
+                this.vistaListar.setVisible(true);
+                this.vistaListar.setTitle("Listar Pacientes");
+                this.vistaListar.setLocationRelativeTo(null);
+                break;
+
             case btnagregar:
                 //llamamos al metodo que esta en el modelo para agragar el dato y le enviamos lo que captura del textField
-                
-                try{
-                
-                String active, active2;
 
+                try {
 
-                active = String.valueOf(this.vistaEmpleado.cbociudad.getSelectedItem());
-                active2 = String.valueOf(this.vistaEmpleado.cbootro.getSelectedItem());
-                
+                    String active, active2;
 
-                //System.out.println(active);
-                boolean correcto1 = false,
-                 correcto2 = false;
-                
-                if (esNumero(this.vistaEmpleado.txtrut.getText())==false){
-                    JOptionPane.showMessageDialog(null, "Ingrese datos numéricos en Codigo, vuelva a intentar");
-                    break;
-                    
-                }else {
-                
-                
-                int verificacioncodigo = Integer.parseInt(this.vistaEmpleado.txtrut.getText());
+                    active = String.valueOf(this.vistaAgregar.cbociudad.getSelectedItem());
 
-                //int verificacioncelular = Integer.parseInt(this.vistaEmpleado.txtcelular.getText());
+                    //System.out.println(active);
+                    boolean correcto1 = false, correcto2 = false;
+                    String verificacionrut = String.valueOf(this.vistaAgregar.txtrut.getText());
 
-                if (verificacioncodigo < 1 || verificacioncodigo > 100) {
-
-                    JOptionPane.showMessageDialog(null, "El código debe ser > a 0 y <= 100. Intente nuevamente");
-
-                } else {
-                    
-                    if (this.modeloDato.existeCodigo(verificacioncodigo)==true){
-                        JOptionPane.showMessageDialog(null, "El código ya existe, vuelva a intentarlo");
-                        
-                    } else {
-                    
-                    
-                    
-                    
-                    
                     //verificar rut no está en blanco
-                    
-                    if (this.vistaEmpleado.txtrut.getText().length()== 0){
+                    if (this.vistaAgregar.txtrut.getText().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Ingrese valor en campo RUT, vuelva a intentar");
-                        
-                    } else {
-                        
-                        if (this.vistaEmpleado.txtnombre.getText().length()== 0){
-                        JOptionPane.showMessageDialog(null, "Ingrese valor en campo Nombre, vuelva a intentar");
-                        
-                    } else {
-                        
-                        if (this.vistaEmpleado.txtapellido.getText().length()== 0){
-                        JOptionPane.showMessageDialog(null, "Ingrese datos en campo Apellido, vuelva a intentar");
-                        
-                    }  else {
-
-
-                    if (active == "Seleccione" || active2 == "Seleccione") {
-                        JOptionPane.showMessageDialog(null, "Debe seleccionar Estado Civil y Departamento");
-
-                        System.out.println(active);
 
                     } else {
-                        
-                        if (esNumero(this.vistaEmpleado.txtcelular.getText())==false){
-                            
-                            JOptionPane.showMessageDialog(null, "Ingrese numeros en el campo Celular, vuelva a intentarlo");
+
+                        if (this.modeloDato.existeRUT(verificacionrut) == true) {
+                            JOptionPane.showMessageDialog(null, "El rut ya existe, vuelva a intentarlo");
+
                         } else {
 
-                        if (this.vistaEmpleado.txtcelular.getText().length() < 9 || this.vistaEmpleado.txtcelular.getText().length() > 9) {
-                            JOptionPane.showMessageDialog(null, "El numero de celular debe tener 9 digitos, vuelva a intentar");
-                        } else {
-                            
-                            if (esNumero(this.vistaEmpleado.txtedad.getText())==false){
-                                
-                                JOptionPane.showMessageDialog(null, "Debe ingresar monto de Sueldo Bruto, vuelva a intentar");
-                            } else {
-                                
-                                if (Integer.parseInt(this.vistaEmpleado.txtedad.getText())<120000){
-                                    JOptionPane.showMessageDialog(null, "El sueldo bruto debe ser mayor o igual a 120000, vuelva a intentar");
-                                } else {
-                                
-                                if (this.vistaEmpleado.txtdireccion.getText().length() == 0){
-                                    JOptionPane.showMessageDialog(null, "Ingrese datos en campo Email, vuelva a intentar");
-                                } else {
-
-                            
-                                                                                    // int codigo, String rut, String nombre, String apellido, int celular, String email, int sueldo_bruto, String est_civil, String nom_depto
-                            if (this.modeloDato.agregarPaciente(Integer.parseInt(this.vistaEmpleado.txtrut.getText()), this.vistaEmpleado.txtrut.getText() ,this.vistaEmpleado.txtnombre.getText(), this.vistaEmpleado.txtapellido.getText(), Integer.parseInt(this.vistaEmpleado.txtcelular.getText()), this.vistaEmpleado.txtdireccion.getText(), Integer.parseInt(this.vistaEmpleado.txtedad.getText()), ecivil, String.valueOf(this.vistaEmpleado.cbociudad.getSelectedItem()))) {
-
-                                JOptionPane.showMessageDialog(null, "El Empleado se agregó correctamente");
-
-                                limpiartodo();
-                                eliminar();
+                            if (this.vistaAgregar.txtnombre.getText().length() == 0) {
+                                JOptionPane.showMessageDialog(null, "Ingrese valor en campo Nombre, vuelva a intentar");
 
                             } else {
-                                JOptionPane.showMessageDialog(null, "No se pudo agregar porque el código ya existe,\nverifiqué el código ingresado");
-                            }
-                            }
-                            }
+                                if (this.vistaAgregar.optfem.isSelected() == false && this.vistaAgregar.optmasc.isSelected() == false) {
+                                    JOptionPane.showMessageDialog(null, "Seleccione Género");
+
+                                } else {
+
+                                    if (this.vistaAgregar.txtedad.getText().length() == 0) {
+                                        JOptionPane.showMessageDialog(null, "Ingrese datos en campo Apellido, vuelva a intentar");
+
+                                    } else {
+                                        if (esNumero(this.vistaAgregar.txtedad.getText()) == false) {
+                                            JOptionPane.showMessageDialog(null, "El campo edad debe ser numérico, vuelva a untentar");
+
+                                        } else {
+                                            if (this.vistaAgregar.txtdireccion.getText().length() == 0) {
+                                                JOptionPane.showMessageDialog(null, "Ingrese datos en campo Dirección, vuelva a intentar");
+
+                                            } else {
+
+                                                if (active == "Seleccione") {
+                                                    JOptionPane.showMessageDialog(null, "Debe seleccionar Ciudad");
+
+                                                    System.out.println(active);
+
+                                                } else {
+
+                                                    if (this.vistaAgregar.optisapresi.isSelected() == false && this.vistaAgregar.optisapreno.isSelected() == false) {
+                                                        JOptionPane.showMessageDialog(null, "Seleccione si tiene Isapre");
+
+                                                    } else {
+
+                                                        String genero=null;
+                                                        if (this.vistaAgregar.optfem.isSelected()==true){
+                                                            genero="F";
+                                                        }
+                                                        if (this.vistaAgregar.optmasc.isSelected()==true){
+                                                            genero="M";
+                                                        }
+                                                        String isapre=null;
+                                                        if (this.vistaAgregar.optisapresi.isSelected()==true){
+                                                            isapre="S";
+                                                        }
+                                                        if (this.vistaAgregar.optisapreno.isSelected()==true){
+                                                            isapre="N";
+                                                        }
+                                                        int donante=0;
+                                                        if (this.vistaAgregar.ckdonante.isSelected()==true){
+                                                            donante=1;
+                                                        }
+                                                        if (this.vistaAgregar.ckdonante.isSelected()==false){
+                                                            donante=0;
+                                                        }
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        
+                                                        // String rut, String nombre, String genero, int edad, String direccion, String ciudad, String isapre, int donante
+                                                        if (this.modeloDato.agregarPaciente(this.vistaAgregar.txtrut.getText(), this.vistaAgregar.txtnombre.getText(), genero, Integer.parseInt(this.vistaAgregar.txtedad.getText()), this.vistaAgregar.txtdireccion.getText(), String.valueOf(this.vistaAgregar.cbociudad.getSelectedItem()), isapre, donante)) {
+
+                                                            JOptionPane.showMessageDialog(null, "El Paciente se agregó correctamente");
+
+                                                            limpiartodo();
+                                                            eliminar();
+
+                                                        } else {
+                                                            JOptionPane.showMessageDialog(null, "No se pudo agregar Paciente");
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+
+                                    }
+                                }
                             }
                         }
                     }
-                    }
-                        }
-                    }
-                    }
-                    }
+                } catch (Exception ex) {
                 }
-                }
-                }catch (Exception ex){}
                 //limpiartodo();  
                 break;
 
-
-
             case btneliminar:
                 //llamamos método para eliminar dato
-                int codigos = Integer.parseInt(this.vistaEmpleado.txtrut.getText());
+                String rut = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 0));
                 boolean confirmacion = false;
                 System.out.println("btneliminar");
-                confirmacion = this.modeloDato.eliminarDato(codigos);
+                confirmacion = this.modeloDato.eliminarDato(rut);
                 if (confirmacion == true) {
                     JOptionPane.showMessageDialog(null, "El registro fue eliminado con éxito");
                 }
-                this.vistaMostrar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
+                this.vistaListar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
                 limpiartodo();
                 break;
 
+            /*
             case btnmodificar:
                 
                 
                 //lamamos método para modificar valores del producto menos el código
-                if (this.modeloDato.modificarDato(Integer.parseInt(this.vistaEmpleado.txtrut.getText()), this.vistaEmpleado.txtrut.getText() ,this.vistaEmpleado.txtnombre.getText(), this.vistaEmpleado.txtapellido.getText(), Integer.parseInt(this.vistaEmpleado.txtcelular.getText()), this.vistaEmpleado.txtdireccion.getText(), Integer.parseInt(this.vistaEmpleado.txtedad.getText()), ecivil, String.valueOf(this.vistaEmpleado.cbociudad.getSelectedItem()))) {
+                // int codigo, String rut, String nombre, String apellido, int celular, String email, int sueldo_bruto, String est_civil, String nom_depto
+                if (this.modeloDato.modificarDato(Integer.parseInt(this.vistaAgregar.txtrut.getText()), this.vistaAgregar.txtrut.getText() ,this.vistaAgregar.txtnombre.getText(), this.vistaAgregar.txtapellido.getText(), Integer.parseInt(this.vistaAgregar.txtcelular.getText()), this.vistaAgregar.txtdireccion.getText(), Integer.parseInt(this.vistaAgregar.txtedad.getText()), ecivil, String.valueOf(this.vistaAgregar.cbociudad.getSelectedItem()))) {
 
                     JOptionPane.showMessageDialog(null, "El Empleado se modificó correctamente");
 
@@ -444,125 +424,138 @@ public class Registro implements ActionListener, MouseListener {
                 }
 
                 System.out.println("btnmodificar");
-                this.vistaMostrar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
+                this.vistaListar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
                 break;
-
+             */
             case btnmostrar:
 
-                this.vistaMostrar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
+                this.vistaListar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
                 break;
-                
-
 
             case btnsalir:
-                limpiartodo();
+                this.vistaAgregar.setVisible(false);
                 break;
-                
+
             case btnbuscar:
 
                 buscar();
-                
+
                 break;
-                
+
+            case btnmodificarlistar:
+                this.vistaAgregar.setVisible(true);
+                this.vistaAgregar.setTitle("Modificar Paciente");
+                this.vistaAgregar.setLocationRelativeTo(null);
+                this.vistaAgregar.txtrut.setEnabled(false);
+                this.vistaAgregar.btnagregar.setEnabled(true);
+                String genero=null;
+                                                        if (this.vistaAgregar.optfem.isSelected()==true){
+                                                            genero="F";
+                                                        }
+                                                        if (this.vistaAgregar.optmasc.isSelected()==true){
+                                                            genero="M";
+                                                        }
+                                                        String isapre=null;
+                                                        if (this.vistaAgregar.optisapresi.isSelected()==true){
+                                                            isapre="S";
+                                                        }
+                                                        if (this.vistaAgregar.optisapreno.isSelected()==true){
+                                                            isapre="N";
+                                                        }
+                                                        int donante=0;
+                                                        if (this.vistaAgregar.ckdonante.isSelected()==true){
+                                                            donante=1;
+                                                        }
+                                                        if (this.vistaAgregar.ckdonante.isSelected()==false){
+                                                            donante=0;
+                                                        }
+                this.modeloDato.modificarDato(this.vistaAgregar.txtrut.getText(), this.vistaAgregar.txtnombre.getText(), genero, Integer.parseInt(this.vistaAgregar.txtedad.getText()), this.vistaAgregar.txtdireccion.getText(), String.valueOf(this.vistaAgregar.cbociudad.getSelectedItem()), isapre, donante);
+                break;
+
             case btnlimpiar:
                 eliminar();
                 limpiartodo();
                 break;
-                
+
             case btnvolver:
-                this.vistaMostrar.setVisible(false);//Hago que la vista sea visible
+                this.vistaListar.setVisible(false);//Hago que la vista sea visible
                 limpiartodo();
 
                 break;
 
-
             case msissalir:
                 System.exit(0);
                 break;
-                
+
             case mempmostrar:
-                this.vistaMostrar.setVisible(true);//Hago que la vista sea visible
-                this.vistaMostrar.setLocationRelativeTo(null);
-                this.vistaMostrar.setTitle("Mostras Datos Empleados");
-                
-                break;
-               
-            case cboestadocivil:
- 
-                if (this.vistaEmpleado.cbootro.getSelectedItem() == "Casado") {
-                    ecivil = "C";
-                }
-                if (this.vistaEmpleado.cbootro.getSelectedItem() == "Soltero") {
-                    ecivil = "S";
-                }
-                if (this.vistaEmpleado.cbootro.getSelectedItem() == "Viudo") {
-                    ecivil = "V";
-                }
+                this.vistaListar.setVisible(true);//Hago que la vista sea visible
+                this.vistaListar.setLocationRelativeTo(null);
+                this.vistaListar.setTitle("Listar Pacientes");
 
                 break;
-                
-
-                
-
-                
-
-                
 
         }
 
     }
+
     public static void main(String[] args) {
         // TODO code application logic here
         new Registro(new vista.Menu()).iniciar();
     }
+
     @Override
     public void mouseClicked(MouseEvent e) {
-        int row = this.vistaMostrar.tbEmpleado.rowAtPoint(e.getPoint());
+        int row = this.vistaListar.tbEmpleado.rowAtPoint(e.getPoint());
 
         /* row devolvera -1 si se ha clicado fuera de la fila pero dentro de la tabla, si no devolvera el indice de la fila en la que se ha clicado. */
-        this.vistaEmpleado.txtrut.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 0)));
-        this.vistaEmpleado.txtrut.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 1)));
-        this.vistaEmpleado.txtnombre.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 2)));
-        this.vistaEmpleado.txtapellido.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 3)));
-        this.vistaEmpleado.txtcelular.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 4)));
-        this.vistaEmpleado.txtdireccion.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 5)));
-        this.vistaEmpleado.txtedad.setText(String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(row, 6)));
+        this.vistaAgregar.txtrut.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 0)));
+        this.vistaAgregar.txtnombre.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 1)));
+        String sexo = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 2));
+        if (sexo == "M") {
+            this.vistaAgregar.optmasc.setSelected(true);
+        }
+        if (sexo == "F") {
+            this.vistaAgregar.optfem.setSelected(true);
+        }
 
-        String ecivil = String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 7));
-        switch (ecivil) {
-            case "C":
-                this.vistaEmpleado.cbootro.setSelectedIndex(1);
+        this.vistaAgregar.txtedad.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 3)));
+
+        this.vistaAgregar.txtdireccion.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 4)));
+
+        String ciudad = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 5));
+        switch (ciudad) {
+            case "Santiago":
+                this.vistaAgregar.cbociudad.setSelectedIndex(1);
                 break;
-            case "S":
-                this.vistaEmpleado.cbootro.setSelectedIndex(2);
+            case "Valparaíso":
+                this.vistaAgregar.cbociudad.setSelectedIndex(2);
                 break;
-            case "V":
-                this.vistaEmpleado.cbootro.setSelectedIndex(3);
+            case "Concepción":
+                this.vistaAgregar.cbociudad.setSelectedIndex(3);
+                break;
+
+            case "Antofagasta":
+                this.vistaAgregar.cbociudad.setSelectedIndex(4);
+                break;
+
+            case "Puerto Montt":
+                this.vistaAgregar.cbociudad.setSelectedIndex(5);
                 break;
         }
-        
-                        
-                        
-                        String departamento = String.valueOf(this.vistaMostrar.tbEmpleado.getValueAt(0, 8));
-                        switch (departamento){
-                            case "Administración":
-                            this.vistaEmpleado.cbociudad.setSelectedIndex(1);
-                            break;    
-                            case "Bienestar":
-                            this.vistaEmpleado.cbociudad.setSelectedIndex(2);
-                                break;
-                            case "Finanzas":
-                            this.vistaEmpleado.cbociudad.setSelectedIndex(3);    
-                        break;
-                        
-                            case "Informática":
-                               this.vistaEmpleado.cbociudad.setSelectedIndex(4);   
-                                break;
-                                
-                            case "Redes":
-                                this.vistaEmpleado.cbociudad.setSelectedIndex(5);  
-                                break;
-                    }
+
+        String isapre = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 6));
+        if (isapre == "S") {
+            this.vistaAgregar.optisapresi.setSelected(true);
+        }
+        if (isapre == "N") {
+            this.vistaAgregar.optisapreno.setSelected(true);
+        }
+
+        String donante = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 7));
+        if (donante == "1") {
+            this.vistaAgregar.ckdonante.setSelected(true);
+        }
+
     }
 
     @Override
