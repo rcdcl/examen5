@@ -47,14 +47,14 @@ public class Modelo extends Conexion {
     }
 
     //Buscar datos dentro de la BD
-    public Object buscarDato(int rut) {
+    public DefaultTableModel buscarDato(String rut) {
         DefaultTableModel tablemodel = new DefaultTableModel();
         //int registros = 0;
         String[] columNames = {"Rut", "Nombre", "Género", "Edad", "Direccion", "Ciudad", "Isapre", "Donante"};
 
         Object[][] data = new String[1][8];
         try {
-            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT rut, nombre, genero, edad, direccion, ciudad, isapre, donante FROM paciente where rut like '%" + rut +"%'");
+            PreparedStatement pstm = this.getConexion().prepareStatement("SELECT rut, nombre, genero, edad, direccion, ciudad, isapre, donante FROM paciente where rut = '" + rut +"'");
             ResultSet res = pstm.executeQuery();
             System.out.println(rut);
             String scodigo = String.valueOf(rut);
@@ -235,6 +235,7 @@ public class Modelo extends Conexion {
             //pstm.execute();
             pstm.close();
             getConexion().close();
+            
             return true;
         } catch (SQLException e) {
             System.err.println(e.getMessage());

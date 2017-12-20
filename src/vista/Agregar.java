@@ -68,7 +68,7 @@ public class Agregar extends javax.swing.JFrame {
 
         btnagregar.setText("Guardar");
         btnagregar.setToolTipText("");
-        jPanel1.add(btnagregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 100, 210, 70));
+        jPanel1.add(btnagregar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 100, 210, 70));
 
         jLabel9.setFont(new java.awt.Font("Lucida Grande", 0, 36)); // NOI18N
         jLabel9.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -81,7 +81,7 @@ public class Agregar extends javax.swing.JFrame {
                 btnsalirActionPerformed(evt);
             }
         });
-        jPanel1.add(btnsalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 290, 210, 70));
+        jPanel1.add(btnsalir, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 290, 210, 70));
 
         cbociudad.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Seleccione", "Santiago", "Valparaíso", "Concepción", "Antofagasta", "Puerto Montt" }));
         jPanel1.add(cbociudad, new org.netbeans.lib.awtextra.AbsoluteConstraints(210, 370, 190, -1));
@@ -136,7 +136,7 @@ public class Agregar extends javax.swing.JFrame {
                 btnlimpiarActionPerformed(evt);
             }
         });
-        jPanel1.add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(640, 190, 210, 70));
+        jPanel1.add(btnlimpiar, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 190, 210, 70));
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -214,8 +214,8 @@ public class Agregar extends javax.swing.JFrame {
     public javax.swing.JButton btnsalir;
     public javax.swing.JComboBox<String> cbociudad;
     public javax.swing.JCheckBox ckdonante;
-    private javax.swing.ButtonGroup genero;
-    private javax.swing.ButtonGroup isapre;
+    public javax.swing.ButtonGroup genero;
+    public javax.swing.ButtonGroup isapre;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

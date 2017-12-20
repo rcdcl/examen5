@@ -31,6 +31,9 @@ import vista.Menu;
  * @author MBpro_Rafa && MBpro_Erick :P
  */
 public class Registro implements ActionListener, MouseListener {
+    
+    private int busquedin = 0;
+    private int otrobusquedin = 0;
 
     //Declarar vista
     Menu vistaMenu;
@@ -71,6 +74,7 @@ public class Registro implements ActionListener, MouseListener {
     //Agregamos el constructor de la clase
     public Registro(Menu vistaMenu) {
         this.vistaMenu = vistaMenu;
+        this.busquedin = busquedin;
 
         //this.vistaElDato.setVisible(true);
     }
@@ -102,7 +106,7 @@ public class Registro implements ActionListener, MouseListener {
         this.vistaAgregar.btnlimpiar.setActionCommand("btnlimpiar");
         this.vistaAgregar.btnlimpiar.addActionListener(this);
         // Escuchamos el boton que muestra el dato
-        this.vistaListar.btnbuscar.setActionCommand("btnmostrar");
+        this.vistaListar.btnbuscar.setActionCommand("btnbuscar");
         this.vistaListar.btnbuscar.addActionListener(this);
         // Escuchamos el boton que muestra el dato
 
@@ -146,14 +150,14 @@ public class Registro implements ActionListener, MouseListener {
         this.vistaMenu.mnvistaagregar.setActionCommand("mnvistaagregar");
         this.vistaMenu.mnvistaagregar.addActionListener(this);
 
-        this.vistaListar.tbEmpleado.addMouseListener(this);
+        this.vistaListar.tbPaciente.addMouseListener(this);
 
     }
 
     //limpia la tabla
     public void eliminar() {
-        DefaultTableModel tb = (DefaultTableModel) this.vistaListar.tbEmpleado.getModel();
-        int a = this.vistaListar.tbEmpleado.getRowCount() - 1;
+        DefaultTableModel tb = (DefaultTableModel) this.vistaListar.tbPaciente.getModel();
+        int a = this.vistaListar.tbPaciente.getRowCount() - 1;
         System.out.println(a);
         for (int i = a; i >= 0; i--) {
             tb.removeRow(tb.getRowCount() - 1);
@@ -164,19 +168,24 @@ public class Registro implements ActionListener, MouseListener {
     //limpia los datos de pantalla
     public void limpiartodo() {
         this.vistaAgregar.txtnombre.setText("");
-
         this.vistaAgregar.txtrut.setText("");
+        this.vistaListar.txtbuscar.setText("");
+        this.vistaAgregar.genero.clearSelection();
+        this.vistaAgregar.isapre.clearSelection();
+        this.vistaAgregar.ckdonante.setSelected(false);
 
         this.vistaAgregar.cbociudad.setSelectedIndex(0);
-        this.vistaAgregar.txtrut.setText("");
+
 
         this.vistaAgregar.txtdireccion.setText("");
         this.vistaAgregar.txtedad.setText("");
-
+        this.busquedin=0;
+        this.otrobusquedin=0;
         this.vistaAgregar.txtrut.setEnabled(true);
         this.vistaAgregar.btnagregar.setEnabled(true);
         this.vistaAgregar.txtrut.requestFocus();
         eliminar();
+        System.out.println(this.busquedin+ " "+ this.otrobusquedin);
 
     }
 
@@ -187,18 +196,21 @@ public class Registro implements ActionListener, MouseListener {
                 rut = this.vistaAgregar.txtrut.getText();
                 boolean bconfirmacion = false;
                 System.out.println("buscar");
+                
+               
+                
+                
+                this.vistaListar.tbPaciente.setModel((TableModel) this.modeloDato.buscarRut(rut));
 
-                this.vistaListar.tbEmpleado.setModel((TableModel) this.modeloDato.buscarRut(rut));
-
-                if (String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 1)) == "null") {
-                    JOptionPane.showMessageDialog(null, "El Código no existe, vuelva a intentar");
+                if (String.valueOf(this.vistaListar.tbPaciente.getValueAt(0, 1)) == "null") {
+                    JOptionPane.showMessageDialog(null, "El RUT no existe, vuelva a intentar");
                     limpiartodo();
 
                 } else {
 
-                    this.vistaAgregar.txtrut.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 0)));
-                    this.vistaAgregar.txtnombre.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 1)));
-                    String sexo = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 2));
+                    this.vistaAgregar.txtrut.setText(String.valueOf(this.vistaListar.tbPaciente.getValueAt(0, 0)));
+                    this.vistaAgregar.txtnombre.setText(String.valueOf(this.vistaListar.tbPaciente.getValueAt(0, 1)));
+                    String sexo = String.valueOf(this.vistaListar.tbPaciente.getValueAt(0, 2));
                     if (sexo == "M") {
                         this.vistaAgregar.optmasc.setSelected(true);
                     }
@@ -206,11 +218,11 @@ public class Registro implements ActionListener, MouseListener {
                         this.vistaAgregar.optfem.setSelected(true);
                     }
 
-                    this.vistaAgregar.txtedad.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 3)));
+                    this.vistaAgregar.txtedad.setText(String.valueOf(this.vistaListar.tbPaciente.getValueAt(0, 3)));
 
-                    this.vistaAgregar.txtdireccion.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 4)));
+                    this.vistaAgregar.txtdireccion.setText(String.valueOf(this.vistaListar.tbPaciente.getValueAt(0, 4)));
 
-                    String ciudad = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 5));
+                    String ciudad = String.valueOf(this.vistaListar.tbPaciente.getValueAt(0, 5));
                     switch (ciudad) {
                         case "Santiago":
                             this.vistaAgregar.cbociudad.setSelectedIndex(1);
@@ -231,7 +243,7 @@ public class Registro implements ActionListener, MouseListener {
                             break;
                     }
 
-                    String isapre = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 6));
+                    String isapre = String.valueOf(this.vistaListar.tbPaciente.getValueAt(0, 6));
                     if (isapre == "S") {
                         this.vistaAgregar.optisapresi.setSelected(true);
                     }
@@ -239,7 +251,7 @@ public class Registro implements ActionListener, MouseListener {
                         this.vistaAgregar.optisapreno.setSelected(true);
                     }
 
-                    String donante = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 7));
+                    String donante = String.valueOf(this.vistaListar.tbPaciente.getValueAt(0, 7));
                     if (donante == "1") {
                         this.vistaAgregar.ckdonante.setSelected(true);
                     }
@@ -254,6 +266,7 @@ public class Registro implements ActionListener, MouseListener {
                         // JOptionPane.showMessageDialog(null, "El código de empleado no existe, vuelva a intentarlo");
                     }
                 }
+                
             
     }
 
@@ -268,6 +281,7 @@ public class Registro implements ActionListener, MouseListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
+   
         switch (Accion.valueOf(e.getActionCommand())) {
 
             case mnvistaagregar:
@@ -284,7 +298,9 @@ public class Registro implements ActionListener, MouseListener {
 
             case btnagregar:
                 //llamamos al metodo que esta en el modelo para agragar el dato y le enviamos lo que captura del textField
-
+                
+                
+                
                 try {
 
                     String active, active2;
@@ -296,6 +312,39 @@ public class Registro implements ActionListener, MouseListener {
                     String verificacionrut = String.valueOf(this.vistaAgregar.txtrut.getText());
 
                     //verificar rut no está en blanco
+                    if (this.vistaAgregar.txtrut.isEnabled()==false){
+                                                        
+                                                        String genero;
+                                                        if (this.vistaAgregar.optfem.isSelected()==true){
+                                                            genero="F";
+                                                        }else{
+                                                        
+                                                            genero="M";
+                                                        }
+                                                        String isapre=null;
+                                                        if (this.vistaAgregar.optisapresi.isSelected()==true){
+                                                            isapre="S";
+                                                        }
+                                                        if (this.vistaAgregar.optisapreno.isSelected()==true){
+                                                            isapre="N";
+                                                        }
+                                                        int donante=0;
+                                                        if (this.vistaAgregar.ckdonante.isSelected()==true){
+                                                            donante=1;
+                                                        }
+                                                        if (this.vistaAgregar.ckdonante.isSelected()==false){
+                                                            donante=0;
+                                                        }
+                        boolean resultado= this.modeloDato.modificarDato(this.vistaAgregar.txtrut.getText(), this.vistaAgregar.txtnombre.getText(), genero, Integer.parseInt(this.vistaAgregar.txtedad.getText()), this.vistaAgregar.txtdireccion.getText(), String.valueOf(this.vistaAgregar.cbociudad.getSelectedItem()), isapre, donante);
+                        if (resultado==true){
+                            JOptionPane.showMessageDialog(null, "El Registro se modificó correctamente");
+                            limpiartodo();
+                        } else{
+                            JOptionPane.showMessageDialog(null, "El Registro no se pudo modificar");
+                        }
+                    } else {
+                    
+                    
                     if (this.vistaAgregar.txtrut.getText().length() == 0) {
                         JOptionPane.showMessageDialog(null, "Ingrese valor en campo RUT, vuelva a intentar");
 
@@ -316,7 +365,7 @@ public class Registro implements ActionListener, MouseListener {
                                 } else {
 
                                     if (this.vistaAgregar.txtedad.getText().length() == 0) {
-                                        JOptionPane.showMessageDialog(null, "Ingrese datos en campo Apellido, vuelva a intentar");
+                                        JOptionPane.showMessageDialog(null, "Ingrese datos en campo edad, vuelva a intentar");
 
                                     } else {
                                         if (esNumero(this.vistaAgregar.txtedad.getText()) == false) {
@@ -384,6 +433,7 @@ public class Registro implements ActionListener, MouseListener {
 
                                     }
                                 }
+                                }
                             }
                         }
                     }
@@ -394,42 +444,32 @@ public class Registro implements ActionListener, MouseListener {
 
             case btneliminar:
                 //llamamos método para eliminar dato
-                String rut = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(0, 0));
+                if (this.vistaListar.txtbuscar.getText().length()==0 && this.busquedin==0 && this.otrobusquedin==0){
+                    System.out.println(this.busquedin + " " + this.otrobusquedin );
+                    JOptionPane.showMessageDialog(null, "Presione el botón Buscar para listar todos los registros,\no ingrese RUT en casilla y presione buscar");
+                } else {
+                    if (this.otrobusquedin==0){
+                       JOptionPane.showMessageDialog(null, "Seleccione una fila y presione el botón Eliminar"); 
+                    } else{
+
+                
+                //String rut = String.valueOf(this.vistaListar.tbPaciente.getValueAt(0, 0));
+                String rut = this.vistaAgregar.txtrut.getText();
+                
                 boolean confirmacion = false;
                 System.out.println("btneliminar");
                 confirmacion = this.modeloDato.eliminarDato(rut);
                 if (confirmacion == true) {
                     JOptionPane.showMessageDialog(null, "El registro fue eliminado con éxito");
                 }
-                this.vistaListar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
+                this.vistaListar.tbPaciente.setModel(this.modeloDato.mostrarDato());
                 limpiartodo();
+                    }}
                 break;
 
-            /*
-            case btnmodificar:
-                
-                
-                //lamamos método para modificar valores del producto menos el código
-                // int codigo, String rut, String nombre, String apellido, int celular, String email, int sueldo_bruto, String est_civil, String nom_depto
-                if (this.modeloDato.modificarDato(Integer.parseInt(this.vistaAgregar.txtrut.getText()), this.vistaAgregar.txtrut.getText() ,this.vistaAgregar.txtnombre.getText(), this.vistaAgregar.txtapellido.getText(), Integer.parseInt(this.vistaAgregar.txtcelular.getText()), this.vistaAgregar.txtdireccion.getText(), Integer.parseInt(this.vistaAgregar.txtedad.getText()), ecivil, String.valueOf(this.vistaAgregar.cbociudad.getSelectedItem()))) {
-
-                    JOptionPane.showMessageDialog(null, "El Empleado se modificó correctamente");
-
-                    //Limpiamos
-                    limpiartodo();
-                    eliminar();
-
-                } else {
-                    JOptionPane.showMessageDialog(null, "No se pudo modificar");
-                }
-
-                System.out.println("btnmodificar");
-                this.vistaListar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
-                break;
-             */
             case btnmostrar:
 
-                this.vistaListar.tbEmpleado.setModel(this.modeloDato.mostrarDato());
+                this.vistaListar.tbPaciente.setModel(this.modeloDato.mostrarDato());
                 break;
 
             case btnsalir:
@@ -437,40 +477,35 @@ public class Registro implements ActionListener, MouseListener {
                 break;
 
             case btnbuscar:
+                this.busquedin=1;
+                if (this.vistaListar.txtbuscar.getText().length()!=0){
+                    String rut = this.vistaListar.txtbuscar.getText();
+                    this.vistaListar.tbPaciente.setModel(this.modeloDato.buscarDato(rut));
+                    
+                } else {
+                
 
                 buscar();
-
+                System.out.println(this.busquedin + " " + this.otrobusquedin );
+                }
                 break;
 
             case btnmodificarlistar:
+                if (this.vistaListar.txtbuscar.getText().length()==0 && this.busquedin==0 && this.otrobusquedin==0){
+                    System.out.println(this.busquedin + " " + this.otrobusquedin );
+                    JOptionPane.showMessageDialog(null, "Presione el botón Buscar para listar todos los registros,\no ingrese RUT en casilla y presione buscar");
+                } else {
+                    if (this.otrobusquedin==0){
+                       JOptionPane.showMessageDialog(null, "Seleccione una opción de la lista de registros y presione modificar"); 
+                    } else{
                 this.vistaAgregar.setVisible(true);
                 this.vistaAgregar.setTitle("Modificar Paciente");
                 this.vistaAgregar.setLocationRelativeTo(null);
                 this.vistaAgregar.txtrut.setEnabled(false);
                 this.vistaAgregar.btnagregar.setEnabled(true);
-                String genero=null;
-                                                        if (this.vistaAgregar.optfem.isSelected()==true){
-                                                            genero="F";
-                                                        }
-                                                        if (this.vistaAgregar.optmasc.isSelected()==true){
-                                                            genero="M";
-                                                        }
-                                                        String isapre=null;
-                                                        if (this.vistaAgregar.optisapresi.isSelected()==true){
-                                                            isapre="S";
-                                                        }
-                                                        if (this.vistaAgregar.optisapreno.isSelected()==true){
-                                                            isapre="N";
-                                                        }
-                                                        int donante=0;
-                                                        if (this.vistaAgregar.ckdonante.isSelected()==true){
-                                                            donante=1;
-                                                        }
-                                                        if (this.vistaAgregar.ckdonante.isSelected()==false){
-                                                            donante=0;
-                                                        }
-                this.modeloDato.modificarDato(this.vistaAgregar.txtrut.getText(), this.vistaAgregar.txtnombre.getText(), genero, Integer.parseInt(this.vistaAgregar.txtedad.getText()), this.vistaAgregar.txtdireccion.getText(), String.valueOf(this.vistaAgregar.cbociudad.getSelectedItem()), isapre, donante);
-                break;
+                JOptionPane.showMessageDialog(null, "Modifique el dato que desee y presione el botón Guardar");
+                }}
+                 break;
 
             case btnlimpiar:
                 eliminar();
@@ -505,24 +540,35 @@ public class Registro implements ActionListener, MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        int row = this.vistaListar.tbEmpleado.rowAtPoint(e.getPoint());
+        this.otrobusquedin=1;
+        System.out.println(this.otrobusquedin);
+        int row = this.vistaListar.tbPaciente.rowAtPoint(e.getPoint());
 
         /* row devolvera -1 si se ha clicado fuera de la fila pero dentro de la tabla, si no devolvera el indice de la fila en la que se ha clicado. */
-        this.vistaAgregar.txtrut.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 0)));
-        this.vistaAgregar.txtnombre.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 1)));
-        String sexo = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 2));
-        if (sexo == "M") {
-            this.vistaAgregar.optmasc.setSelected(true);
+        this.vistaAgregar.txtrut.setText(String.valueOf(this.vistaListar.tbPaciente.getValueAt(row, 0)));
+        this.vistaAgregar.txtnombre.setText(String.valueOf(this.vistaListar.tbPaciente.getValueAt(row, 1)));
+        String sexo = String.valueOf(this.vistaListar.tbPaciente.getValueAt(row, 2));
+        System.out.println(sexo);
+        switch (sexo){
+            case "M":
+                this.vistaAgregar.optmasc.setSelected(true);
+                break;
+                
+            case "F":
+                this.vistaAgregar.optfem.setSelected(true);
+                break;
+                
+            
+            
+            
         }
-        if (sexo == "F") {
-            this.vistaAgregar.optfem.setSelected(true);
-        }
+        
 
-        this.vistaAgregar.txtedad.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 3)));
+        this.vistaAgregar.txtedad.setText(String.valueOf(this.vistaListar.tbPaciente.getValueAt(row, 3)));
 
-        this.vistaAgregar.txtdireccion.setText(String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 4)));
+        this.vistaAgregar.txtdireccion.setText(String.valueOf(this.vistaListar.tbPaciente.getValueAt(row, 4)));
 
-        String ciudad = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 5));
+        String ciudad = String.valueOf(this.vistaListar.tbPaciente.getValueAt(row, 5));
         switch (ciudad) {
             case "Santiago":
                 this.vistaAgregar.cbociudad.setSelectedIndex(1);
@@ -543,18 +589,25 @@ public class Registro implements ActionListener, MouseListener {
                 break;
         }
 
-        String isapre = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 6));
-        if (isapre == "S") {
-            this.vistaAgregar.optisapresi.setSelected(true);
+        String isapre = String.valueOf(this.vistaListar.tbPaciente.getValueAt(row, 6));
+        switch(isapre){
+            case "S":
+                this.vistaAgregar.optisapresi.setSelected(true);
+                break;
+            case "N":
+                this.vistaAgregar.optisapreno.setSelected(true);
+                break;
+            
         }
-        if (isapre == "N") {
-            this.vistaAgregar.optisapreno.setSelected(true);
+        
+        String donante = String.valueOf(this.vistaListar.tbPaciente.getValueAt(row, 7));
+        switch(donante){
+            case "1":
+                this.vistaAgregar.ckdonante.setSelected(true);
+                break;
+            
         }
-
-        String donante = String.valueOf(this.vistaListar.tbEmpleado.getValueAt(row, 7));
-        if (donante == "1") {
-            this.vistaAgregar.ckdonante.setSelected(true);
-        }
+        
 
     }
 

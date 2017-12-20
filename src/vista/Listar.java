@@ -28,7 +28,7 @@ public class Listar extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane2 = new javax.swing.JScrollPane();
-        tbEmpleado = new javax.swing.JTable();
+        tbPaciente = new javax.swing.JTable();
         btnbuscar = new javax.swing.JButton();
         btnvolver = new javax.swing.JButton();
         txtbuscar = new javax.swing.JTextField();
@@ -37,7 +37,7 @@ public class Listar extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        tbEmpleado.setModel(new javax.swing.table.DefaultTableModel(
+        tbPaciente.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -45,7 +45,7 @@ public class Listar extends javax.swing.JFrame {
 
             }
         ));
-        jScrollPane2.setViewportView(tbEmpleado);
+        jScrollPane2.setViewportView(tbPaciente);
 
         btnbuscar.setText("Buscar");
         btnbuscar.addActionListener(new java.awt.event.ActionListener() {
@@ -152,7 +152,7 @@ public class Listar extends javax.swing.JFrame {
     public javax.swing.JButton btnmodificarlistar;
     public javax.swing.JButton btnvolver;
     private javax.swing.JScrollPane jScrollPane2;
-    public javax.swing.JTable tbEmpleado;
+    public javax.swing.JTable tbPaciente;
     public javax.swing.JTextField txtbuscar;
     // End of variables declaration//GEN-END:variables
 }
